@@ -13,43 +13,45 @@
             background: linear-gradient(135deg, #74ebd5, #acb6e5);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
             direction: rtl;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .container {
-            max-width: 700px;
+            max-width: 90%;
+            width: 100%;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
-            position: relative;
+            margin: 20px auto;
         }
         h1 {
             color: #2c3e50;
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-size: 2em;
+            margin-bottom: 15px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         .question {
-            font-size: 1.5em;
-            margin: 20px 0;
+            font-size: 1.2em;
+            margin: 15px 0;
             color: #34495e;
             animation: fadeIn 0.5s ease-in-out;
         }
         .options {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
         .option {
             background: #ecf0f1;
-            padding: 15px;
+            padding: 10px;
             border-radius: 10px;
-            font-size: 1.2em;
+            font-size: 1em;
             cursor: pointer;
             transition: transform 0.3s, background 0.3s;
         }
@@ -58,15 +60,15 @@
             background: #dfe6e9;
         }
         input[type="radio"] {
-            margin-left: 10px;
+            margin-left: 8px;
         }
         button {
             background: #ff6b6b;
             color: white;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border: none;
             border-radius: 25px;
-            font-size: 1.2em;
+            font-size: 1em;
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
         }
@@ -75,8 +77,8 @@
             transform: translateY(-3px);
         }
         #result {
-            margin-top: 20px;
-            font-size: 1.5em;
+            margin-top: 15px;
+            font-size: 1.2em;
             color: #2c3e50;
             font-weight: bold;
         }
@@ -88,19 +90,89 @@
             100% { opacity: 1; transform: translateY(0); }
         }
         .emoji {
-            font-size: 3em;
+            font-size: 2.5em;
             animation: bounce 1s infinite;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-20px); }
-            60% { transform: translateY(-10px); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-8px); }
         }
         .progress {
-            font-size: 1.2em;
+            font-size: 1em;
             color: #7f8c8d;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .question {
+                font-size: 1em;
+            }
+            .option {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+            button {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+            .emoji {
+                font-size: 2em;
+            }
+            .progress {
+                font-size: 0.9em;
+            }
+            .container {
+                padding: 15px;
+                margin: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em;
+            }
+            .question {
+                font-size: 0.9em;
+            }
+            .option {
+                font-size: 0.8em;
+                padding: 6px;
+            }
+            button {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+            .emoji {
+                font-size: 1.5em;
+            }
+            .progress {
+                font-size: 0.8em;
+            }
+            footer {
+                font-size: 0.8em;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -158,6 +230,17 @@
         <div id="emoji" class="emoji hidden">🎈</div>
     </div>
 
+    <footer>
+        <p>تم تصميم الموقع بواسطة: مهدي حسن عبدالعظيم</p>
+        <p>
+            تواصلوا معي: 
+            <a href="https://www.facebook.com/ma7di2hassan" target="_blank">فيسبوك</a> |
+            <a href="https://wa.me/01007586279" target="_blank">واتساب</a> |
+            <a href="https://www.instagram.com/mahdi2hassan" target="_blank">إنستغرام</a> |
+            <a href="https://www.linkedin.com/in/mahdi2hassan" target="_blank">لينكدان</a>
+        </p>
+    </footer>
+
     <script>
         const correctAnswers = {
             q1: "2",
@@ -173,35 +256,39 @@
         // تتبع المحاولات باستخدام localStorage
         function getAttemptsData() {
             const data = localStorage.getItem("quizAttempts");
-            return data ? JSON.parse(data) : { attempts: 0, lastReset: new Date().toDateString() };
+            return data ? JSON.parse(data) : { attempts: 0, lastAttemptTime: null };
         }
 
-        function saveAttemptsData(attempts) {
+        function saveAttemptsData(attempts, lastAttemptTime) {
             const data = {
                 attempts: attempts,
-                lastReset: new Date().toDateString()
+                lastAttemptTime: lastAttemptTime
             };
             localStorage.setItem("quizAttempts", JSON.stringify(data));
         }
 
         function checkAttempts() {
             const data = getAttemptsData();
-            const today = new Date().toDateString();
+            const now = new Date().getTime();
+            const oneHour = 60 * 60 * 1000; // ساعة واحدة بالمللي ثانية
 
-            if (data.lastReset !== today) {
+            // إعادة تعيين المحاولات إذا مرت ساعة من آخر محاولة
+            if (data.lastAttemptTime && (now - data.lastAttemptTime >= oneHour)) {
                 data.attempts = 0;
-                data.lastReset = today;
-                saveAttemptsData(0);
+                data.lastAttemptTime = null;
+                saveAttemptsData(0, null);
             }
 
             const attemptsMessage = document.getElementById("attemptsMessage");
             const quizDiv = document.getElementById("quiz");
 
-            if (data.attempts >= 3) {
-                attemptsMessage.innerHTML = "لقد استنفدت محاولاتك اليوم! حاول مرة أخرى غدًا. 🕒";
+            if (data.attempts >= 10) {
+                const timeRemaining = oneHour - (now - data.lastAttemptTime);
+                const minutesRemaining = Math.ceil(timeRemaining / (60 * 1000));
+                attemptsMessage.innerHTML = `لقد استنفدت محاولاتك! حاول مرة أخرى بعد ${minutesRemaining} دقيقة. ⏳`;
                 quizDiv.classList.add("hidden");
             } else {
-                attemptsMessage.innerHTML = `لديك ${3 - data.attempts} محاولات متبقية اليوم. 🚀`;
+                attemptsMessage.innerHTML = `لديك ${10 - data.attempts} محاولات متبقية. 🚀`;
                 quizDiv.classList.remove("hidden");
             }
         }
@@ -260,7 +347,8 @@
 
             const data = getAttemptsData();
             data.attempts++;
-            saveAttemptsData(data.attempts);
+            data.lastAttemptTime = new Date().getTime();
+            saveAttemptsData(data.attempts, data.lastAttemptTime);
             checkAttempts();
         }
 
