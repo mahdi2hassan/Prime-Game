@@ -4,86 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة الأعداد الأولية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             direction: rtl;
+            overflow: hidden;
         }
         .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
         }
         h1 {
-            color: #333;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         .question {
+            font-size: 1.5em;
             margin: 20px 0;
-            font-size: 18px;
+            color: #34495e;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .option {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .option:hover {
+            transform: scale(1.05);
+            background: #dfe6e9;
+        }
+        input[type="radio"] {
+            margin-left: 10px;
         }
         button {
-            background-color: #28a745;
+            background: #ff6b6b;
             color: white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
+            font-size: 1.2em;
             cursor: pointer;
-            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
         }
         button:hover {
-            background-color: #218838;
+            background: #ff8787;
+            transform: translateY(-3px);
         }
         #result {
             margin-top: 20px;
-            font-size: 20px;
+            font-size: 1.5em;
+            color: #2c3e50;
             font-weight: bold;
         }
         .hidden {
             display: none;
         }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .emoji {
+            font-size: 3em;
+            animation: bounce 1s infinite;
+            margin: 20px 0;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        .progress {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>لعبة الأعداد الأولية</h1>
-        <p id="attemptsMessage"></p>
-        <div id="quiz" class="hidden">
-            <div class="question">
-                <p>1. ما هو أصغر عدد أولي؟</p>
-                <input type="radio" name="q1" value="1"> 1
-                <input type="radio" name="q1" value="2"> 2
-                <input type="radio" name="q1" value="3"> 3
+        <h1>لعبة الأعداد الأولية 🎉</h1>
+        <p id="attemptsMessage" class="progress"></p>
+        <p id="progress" class="progress"></p>
+        <div id="quiz">
+            <div id="q1" class="question-page">
+                <div class="question">1. ما هو أصغر عدد أولي؟</div>
+                <div class="options">
+                    <label class="option">1 <input type="radio" name="q1" value="1"></label>
+                    <label class="option">2 <input type="radio" name="q1" value="2"></label>
+                    <label class="option">3 <input type="radio" name="q1" value="3"></label>
+                </div>
+                <button onclick="nextQuestion(1)">التالي ➡️</button>
             </div>
-            <div class="question">
-                <p>2. هل العدد 15 أولي؟</p>
-                <input type="radio" name="q2" value="نعم"> نعم
-                <input type="radio" name="q2" value="لا"> لا
+            <div id="q2" class="question-page hidden">
+                <div class="question">2. هل العدد 15 أولي؟</div>
+                <div class="options">
+                    <label class="option">نعم <input type="radio" name="q2" value="نعم"></label>
+                    <label class="option">لا <input type="radio" name="q2" value="لا"></label>
+                </div>
+                <button onclick="nextQuestion(2)">التالي ➡️</button>
             </div>
-            <div class="question">
-                <p>3. ما هو العدد الأولي التالي بعد 7؟</p>
-                <input type="radio" name="q3" value="8"> 8
-                <input type="radio" name="q3" value="9"> 9
-                <input type="radio" name="q3" value="11"> 11
+            <div id="q3" class="question-page hidden">
+                <div class="question">3. ما هو العدد الأولي التالي بعد 7؟</div>
+                <div class="options">
+                    <label class="option">8 <input type="radio" name="q3" value="8"></label>
+                    <label class="option">9 <input type="radio" name="q3" value="9"></label>
+                    <label class="option">11 <input type="radio" name="q3" value="11"></label>
+                </div>
+                <button onclick="nextQuestion(3)">التالي ➡️</button>
             </div>
-            <div class="question">
-                <p>4. كم عدد الأعداد الأولية بين 1 و10؟</p>
-                <input type="radio" name="q4" value="2"> 2
-                <input type="radio" name="q4" value="3"> 3
-                <input type="radio" name="q4" value="4"> 4
+            <div id="q4" class="question-page hidden">
+                <div class="question">4. كم عدد الأعداد الأولية بين 1 و10؟</div>
+                <div class="options">
+                    <label class="option">2 <input type="radio" name="q4" value="2"></label>
+                    <label class="option">3 <input type="radio" name="q4" value="3"></label>
+                    <label class="option">4 <input type="radio" name="q4" value="4"></label>
+                </div>
+                <button onclick="nextQuestion(4)">التالي ➡️</button>
             </div>
-            <div class="question">
-                <p>5. هل العدد 1 أولي؟</p>
-                <input type="radio" name="q5" value="نعم"> نعم
-                <input type="radio" name="q5" value="لا"> لا
+            <div id="q5" class="question-page hidden">
+                <div class="question">5. هل العدد 1 أولي؟</div>
+                <div class="options">
+                    <label class="option">نعم <input type="radio" name="q5" value="نعم"></label>
+                    <label class="option">لا <input type="radio" name="q5" value="لا"></label>
+                </div>
+                <button onclick="submitQuiz()">إرسال الإجابات 🚀</button>
             </div>
-            <button onclick="submitQuiz()">إرسال الإجابات</button>
         </div>
         <div id="result"></div>
+        <div id="emoji" class="emoji hidden">🎈</div>
     </div>
 
     <script>
@@ -94,6 +166,9 @@
             q4: "4",
             q5: "لا"
         };
+
+        let currentQuestion = 1;
+        let score = 0;
 
         // تتبع المحاولات باستخدام localStorage
         function getAttemptsData() {
@@ -113,7 +188,6 @@
             const data = getAttemptsData();
             const today = new Date().toDateString();
 
-            // إعادة تعيين المحاولات إذا مر يوم جديد
             if (data.lastReset !== today) {
                 data.attempts = 0;
                 data.lastReset = today;
@@ -124,44 +198,76 @@
             const quizDiv = document.getElementById("quiz");
 
             if (data.attempts >= 3) {
-                attemptsMessage.innerHTML = "لقد استنفدت محاولاتك اليوم! حاول مرة أخرى غدًا.";
+                attemptsMessage.innerHTML = "لقد استنفدت محاولاتك اليوم! حاول مرة أخرى غدًا. 🕒";
                 quizDiv.classList.add("hidden");
             } else {
-                attemptsMessage.innerHTML = `لديك ${3 - data.attempts} محاولات متبقية اليوم.`;
+                attemptsMessage.innerHTML = `لديك ${3 - data.attempts} محاولات متبقية اليوم. 🚀`;
                 quizDiv.classList.remove("hidden");
             }
         }
 
+        function updateProgress() {
+            const progress = document.getElementById("progress");
+            progress.innerHTML = `السؤال ${currentQuestion} من 5 📝`;
+        }
+
+        function nextQuestion(questionNum) {
+            const selected = document.querySelector(`input[name="q${questionNum}"]:checked`);
+            if (!selected) {
+                alert("يرجى اختيار إجابة قبل المتابعة! ⚠️");
+                return;
+            }
+
+            if (selected.value === correctAnswers[`q${questionNum}`]) {
+                score++;
+            }
+
+            document.getElementById(`q${questionNum}`).classList.add("hidden");
+            currentQuestion++;
+            if (currentQuestion <= 5) {
+                document.getElementById(`q${currentQuestion}`).classList.remove("hidden");
+                updateProgress();
+            }
+        }
+
         function submitQuiz() {
-            let score = 0;
-
-            // جمع الإجابات
-            for (let i = 1; i <= 5; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selected && selected.value === correctAnswers[`q${i}`]) {
-                    score++;
-                }
+            const selected = document.querySelector(`input[name="q5"]:checked`);
+            if (!selected) {
+                alert("يرجى اختيار إجابة قبل الإرسال! ⚠️");
+                return;
             }
 
-            // عرض النتيجة
+            if (selected.value === correctAnswers.q5) {
+                score++;
+            }
+
             const resultDiv = document.getElementById("result");
+            const emojiDiv = document.getElementById("emoji");
+            document.getElementById("quiz").classList.add("hidden");
+
             if (score < 2) {
-                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش وكل حاجة بس حاول تاني!`;
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش وكل حاجة بس حاول تاني! 💪`;
+                emojiDiv.innerHTML = "😢";
             } else if (score === 2 || score === 3) {
-                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش!`;
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش! 🌟`;
+                emojiDiv.innerHTML = "😊";
             } else {
-                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش بجد أحسنت!`;
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش بجد أحسنت! 🏆`;
+                emojiDiv.innerHTML = "🎉";
             }
 
-            // تحديث المحاولات
+            emojiDiv.classList.remove("hidden");
+
             const data = getAttemptsData();
             data.attempts++;
             saveAttemptsData(data.attempts);
             checkAttempts();
         }
 
-        // التحقق من المحاولات عند تحميل الصفحة
-        window.onload = checkAttempts;
+        window.onload = function() {
+            checkAttempts();
+            updateProgress();
+        };
     </script>
 </body>
 </html>
