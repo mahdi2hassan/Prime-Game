@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة الأعداد الأولية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <!-- إضافة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
@@ -112,13 +114,18 @@
             width: 100%;
             font-size: 0.9em;
         }
-        footer a {
-            color: #ff6b6b;
-            text-decoration: none;
-            margin: 0 5px;
+        .social-icons {
+            margin-top: 10px;
         }
-        footer a:hover {
-            text-decoration: underline;
+        .social-icons a {
+            color: #ff6b6b;
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s, transform 0.3s;
+        }
+        .social-icons a:hover {
+            color: #ff8787;
+            transform: scale(1.2);
         }
 
         /* Responsive Design */
@@ -147,6 +154,10 @@
                 padding: 15px;
                 margin: 10px;
             }
+            .social-icons a {
+                font-size: 1.2em;
+                margin: 0 8px;
+            }
         }
         @media (max-width: 480px) {
             h1 {
@@ -172,6 +183,10 @@
             footer {
                 font-size: 0.8em;
                 padding: 10px;
+            }
+            .social-icons a {
+                font-size: 1em;
+                margin: 0 5px;
             }
         }
     </style>
@@ -232,13 +247,20 @@
 
     <footer>
         <p>تم تصميم الموقع بواسطة: مهدي حسن عبدالعظيم</p>
-        <p>
-            تواصلوا معي: 
-            <a href="https://www.facebook.com/ma7di2hassan" target="_blank">فيسبوك</a> |
-            <a href="https://wa.me/01007586279" target="_blank">واتساب</a> |
-            <a href="https://www.instagram.com/mahdi2hassan" target="_blank">إنستغرام</a> |
-            <a href="https://www.linkedin.com/in/mahdi2hassan" target="_blank">لينكدان</a>
-        </p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/ma7di2hassan" target="_blank" title="فيسبوك">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://wa.me/01007586279" target="_blank" title="واتساب">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.instagram.com/mahdi2hassan" target="_blank" title="إنستغرام">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/mahdi2hassan" target="_blank" title="لينكدان">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
     </footer>
 
     <script>
