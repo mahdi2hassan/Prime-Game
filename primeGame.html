@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الأعداد الأولية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            direction: rtl;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .question {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>لعبة الأعداد الأولية</h1>
+        <p id="attemptsMessage"></p>
+        <div id="quiz" class="hidden">
+            <div class="question">
+                <p>1. ما هو أصغر عدد أولي؟</p>
+                <input type="radio" name="q1" value="1"> 1
+                <input type="radio" name="q1" value="2"> 2
+                <input type="radio" name="q1" value="3"> 3
+            </div>
+            <div class="question">
+                <p>2. هل العدد 15 أولي؟</p>
+                <input type="radio" name="q2" value="نعم"> نعم
+                <input type="radio" name="q2" value="لا"> لا
+            </div>
+            <div class="question">
+                <p>3. ما هو العدد الأولي التالي بعد 7؟</p>
+                <input type="radio" name="q3" value="8"> 8
+                <input type="radio" name="q3" value="9"> 9
+                <input type="radio" name="q3" value="11"> 11
+            </div>
+            <div class="question">
+                <p>4. كم عدد الأعداد الأولية بين 1 و10؟</p>
+                <input type="radio" name="q4" value="2"> 2
+                <input type="radio" name="q4" value="3"> 3
+                <input type="radio" name="q4" value="4"> 4
+            </div>
+            <div class="question">
+                <p>5. هل العدد 1 أولي؟</p>
+                <input type="radio" name="q5" value="نعم"> نعم
+                <input type="radio" name="q5" value="لا"> لا
+            </div>
+            <button onclick="submitQuiz()">إرسال الإجابات</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            q1: "2",
+            q2: "لا",
+            q3: "11",
+            q4: "4",
+            q5: "لا"
+        };
+
+        // تتبع المحاولات باستخدام localStorage
+        function getAttemptsData() {
+            const data = localStorage.getItem("quizAttempts");
+            return data ? JSON.parse(data) : { attempts: 0, lastReset: new Date().toDateString() };
+        }
+
+        function saveAttemptsData(attempts) {
+            const data = {
+                attempts: attempts,
+                lastReset: new Date().toDateString()
+            };
+            localStorage.setItem("quizAttempts", JSON.stringify(data));
+        }
+
+        function checkAttempts() {
+            const data = getAttemptsData();
+            const today = new Date().toDateString();
+
+            // إعادة تعيين المحاولات إذا مر يوم جديد
+            if (data.lastReset !== today) {
+                data.attempts = 0;
+                data.lastReset = today;
+                saveAttemptsData(0);
+            }
+
+            const attemptsMessage = document.getElementById("attemptsMessage");
+            const quizDiv = document.getElementById("quiz");
+
+            if (data.attempts >= 3) {
+                attemptsMessage.innerHTML = "لقد استنفدت محاولاتك اليوم! حاول مرة أخرى غدًا.";
+                quizDiv.classList.add("hidden");
+            } else {
+                attemptsMessage.innerHTML = `لديك ${3 - data.attempts} محاولات متبقية اليوم.`;
+                quizDiv.classList.remove("hidden");
+            }
+        }
+
+        function submitQuiz() {
+            let score = 0;
+
+            // جمع الإجابات
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected && selected.value === correctAnswers[`q${i}`]) {
+                    score++;
+                }
+            }
+
+            // عرض النتيجة
+            const resultDiv = document.getElementById("result");
+            if (score < 2) {
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش وكل حاجة بس حاول تاني!`;
+            } else if (score === 2 || score === 3) {
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش!`;
+            } else {
+                resultDiv.innerHTML = `درجتك: ${score} من 5<br>عاش بجد أحسنت!`;
+            }
+
+            // تحديث المحاولات
+            const data = getAttemptsData();
+            data.attempts++;
+            saveAttemptsData(data.attempts);
+            checkAttempts();
+        }
+
+        // التحقق من المحاولات عند تحميل الصفحة
+        window.onload = checkAttempts;
+    </script>
+</body>
+</html>
