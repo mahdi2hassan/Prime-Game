@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>مرحبا بك  - مكتبة بلس</title>
+    <title>تسجيل طلبات المنتجات - مكتبة بلس</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="نموذج تسجيل طلبات المنتجات - منصة مكتبة بلس" />
 
@@ -24,14 +24,14 @@
 
     <style type="text/css">
         :root {
-            --primary: #0f172a; /* أسود مائل للأزرق */
-            --secondary: #06b6d4; /* سيان نيون */
-            --accent: #db2777; /* ماجنتا نيون */
+            --primary: #1e1b4b; /* إنديجو داكن */
+            --secondary: #22d3ee; /* سيان نابض */
+            --accent: #f472b6; /* بينك نيون */
             --text: #f8fafc;
-            --background: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --glow: 0 0 20px rgba(219, 39, 119, 0.4);
-            --border-radius: 20px;
+            --background: #111827;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --glow: 0 0 20px rgba(244, 114, 182, 0.4);
+            --border-radius: 24px;
         }
 
         * {
@@ -42,7 +42,7 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230f172a;stop-opacity:1"/><stop offset="100%" style="stop-color:%2306b6d4;stop-opacity:0.2"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23grad)"/></svg>') fixed;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%231e1b4b;stop-opacity:1"/><stop offset="100%" style="stop-color:%2322d3ee;stop-opacity:0.3"/></radialGradient><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter></defs><rect width="100%" height="100%" fill="url(%23grad)"/><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.1"/></svg>') fixed;
             background-size: cover;
             direction: rtl;
             text-align: right;
@@ -51,33 +51,35 @@
         }
 
         .main {
-            position: relative;
             width: 100%;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            align-items: center;
+            padding: 1rem;
         }
 
         .header {
-            padding: 2.5rem;
+            padding: 3rem;
             text-align: center;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: var(--border-radius);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
             margin: 2rem auto;
-            max-width: 95%;
+            max-width: 800px;
+            width: 100%;
             position: relative;
             z-index: 1;
         }
 
         .header img {
-            width: clamp(140px, 20vw, 180px);
+            width: clamp(160px, 22vw, 200px);
             height: auto;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+            margin: 0 auto 1.5rem;
+            display: block;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
             transition: transform 0.4s ease;
         }
 
@@ -86,7 +88,7 @@
         }
 
         .header h1 {
-            font-size: clamp(2rem, 6vw, 3rem);
+            font-size: clamp(2.2rem, 6vw, 3.2rem);
             font-weight: 900;
             background: linear-gradient(135deg, var(--secondary), var(--accent));
             -webkit-background-clip: text;
@@ -111,15 +113,16 @@
 
         .carousel {
             width: 100%;
+            max-width: 1200px;
             overflow: hidden;
-            margin: 2rem 0;
+            margin: 2rem auto;
             position: relative;
             z-index: 1;
         }
 
         .carousel-track {
             display: flex;
-            animation: scroll 25s linear infinite;
+            animation: scroll 30s linear infinite;
             will-change: transform;
         }
 
@@ -130,20 +133,20 @@
         .carousel-item {
             flex: 0 0 auto;
             margin-left: 1.5rem;
-            width: clamp(220px, 28vw, 320px);
+            width: clamp(240px, 30vw, 360px);
             transition: transform 0.4s ease;
         }
 
         .carousel-item img {
             width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            height: 200px;
             object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .carousel-item:hover {
-            transform: translateY(-10px);
+            transform: translateY(-12px);
         }
 
         @keyframes scroll {
@@ -151,22 +154,44 @@
             100% { transform: translateX(-50%); }
         }
 
-        .form-container {
-            max-width: 750px;
+        .game-container {
+            max-width: 800px;
             width: 100%;
             margin: 2rem auto;
-            padding: 2.5rem;
+            padding: 2rem;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--border-radius);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-container canvas {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border-radius: var(--border-radius);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
             position: relative;
             z-index: 1;
         }
 
         .form-container h3 {
-            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
             background: linear-gradient(135deg, var(--secondary), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -176,7 +201,7 @@
         }
 
         .form-container .input-group {
-            margin-bottom: 1.8rem;
+            margin-bottom: 2rem;
             position: relative;
         }
 
@@ -268,8 +293,8 @@
         }
 
         .form-container .btn:hover::after {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
 
         .form-container .btn:hover {
@@ -299,20 +324,21 @@
         }
 
         .steps {
-            max-width: 750px;
+            max-width: 800px;
+            width: 100%;
             margin: 2rem auto;
             padding: 2rem;
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: var(--border-radius);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
             text-align: center;
         }
 
         .steps h3 {
             color: var(--text);
             margin-bottom: 1.5rem;
-            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
         }
 
         .steps ul {
@@ -358,7 +384,6 @@
             width: 2px;
             height: calc(100% - 1.5rem);
             background: rgba(255, 255, 255, 0.2);
-            display: none;
         }
 
         .steps li:last-child::after {
@@ -368,18 +393,19 @@
         .footer {
             background: var(--primary);
             color: var(--text);
-            padding: 2.5rem 1rem;
+            padding: 3rem 1rem;
             text-align: center;
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
-            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
         .footer .social-icons a {
             color: var(--text);
-            font-size: 1.5rem;
-            margin: 0 0.8rem;
+            font-size: 1.8rem;
+            margin: 0 1rem;
             transition: color 0.3s ease, transform 0.3s ease;
         }
 
@@ -390,49 +416,47 @@
 
         @media (max-width: 768px) {
             .header h1 {
-                font-size: clamp(1.6rem, 5vw, 2rem);
+                font-size: clamp(1.8rem, 5vw, 2.2rem);
             }
 
-            .form-container, .steps {
-                padding: 1.8rem;
+            .header img {
+                width: clamp(120px, 18vw, 160px);
+            }
+
+            .form-container, .steps, .game-container {
+                padding: 2rem;
                 max-width: 90%;
             }
 
-            .form-container .form-control,
-            .form-container .btn {
-                font-size: clamp(0.8rem, 2vw, 0.9rem);
-                padding: 0.8rem;
+            .carousel-item {
+                width: clamp(200px, 25vw, 280px);
+            }
+
+            .game-container canvas {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header {
+                padding: 2rem;
+                margin: 1rem auto;
             }
 
             .header img {
                 width: clamp(100px, 15vw, 120px);
             }
 
-            .carousel-item {
-                width: clamp(180px, 22vw, 240px);
-            }
-        }
-
-        @media (max-width: 576px) {
-            .header {
-                padding: 1.8rem;
-                margin: 1rem auto;
-            }
-
-            .header img {
-                width: clamp(80px, 12vw, 100px);
-            }
-
-            .form-container, .steps {
-                padding: 1.2rem;
+            .form-container, .steps, .game-container {
+                padding: 1.5rem;
             }
 
             .form-container h3, .steps h3 {
-                font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+                font-size: clamp(1.4rem, 3.5vw, 1.8rem);
             }
 
             .footer .social-icons a {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
                 margin: 0 0.5rem;
             }
         }
@@ -457,6 +481,12 @@
                 </div>
             </div>
 
+            <div class="game-container" data-aos="fade-up">
+                <h3>العب لعبة "اجمع الكتاب"</h3>
+                <canvas id="gameCanvas"></canvas>
+                <p>اضغط على الكتب لتجميع النقاط!</p>
+            </div>
+
             <div class="form-container" data-aos="fade-up">
                 <h3 class="text-center alert alert-info">طلب المنتجات</h3>
 
@@ -474,7 +504,7 @@
                     <label>نوع العميل</label>
                 </div>
 
-                <div id="institution-products" style="display: none;">
+                <div id="product-selection">
                     <h3>المنتج</h3>
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -483,11 +513,20 @@
                         </span>
                         <select name="ctl00$ContentPlaceHolder1$ProductList" id="ctl00_ContentPlaceHolder1_ProductList" class="form-control" required>
                             <option selected="selected" value="">اختر المنتج</option>
-                            <option value="office_furniture">أثاث مكتبي (15000 جنيه)</option>
-                            <option value="stationery">أدوات مكتبية (3000 جنيه)</option>
-                            <option value="printers">باقات فودافون  (5000 جنيه)</option>
                         </select>
                         <label>المنتج</label>
+                    </div>
+                </div>
+
+                <div id="printing-pages" style="display: none;">
+                    <h3>عدد الصفحات للتصوير</h3>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fa fa-print"></i>
+                            <label class="alert-danger">(*)</label>
+                        </span>
+                        <input type="number" name="ctl00$ContentPlaceHolder1$Pages" id="ctl00_ContentPlaceHolder1_Pages" class="form-control" placeholder="أدخل عدد الصفحات" min="0" />
+                        <label>عدد الصفحات</label>
                     </div>
                 </div>
 
@@ -542,9 +581,9 @@
         <script type="text/javascript">
             // Initialize AOS
             AOS.init({
-                duration: 1000,
+                duration: 1200,
                 once: true,
-                offset: 120
+                offset: 150
             });
 
             // Animated Title
@@ -557,67 +596,165 @@
                 titleElement.appendChild(span);
             });
 
+            // Product Lists
+            const productLists = {
+                individual: [
+                    { value: 'small_package', text: 'باقة صغيرة (50 جنيه)', price: 50 },
+                    { value: 'large_package', text: 'باقة كبيرة (150 جنيه)', price: 150 },
+                    { value: 'wifi_offer', text: 'عرض واي فاي (80 جنيه)', price: 80 },
+                    { value: 'printing_offer', text: 'عرض تصوير (90 جنيه)', price: 90 }
+                ],
+                institution: [
+                    { value: 'small_package', text: 'باقة صغيرة (40 جنيه)', price: 40 },
+                    { value: 'large_package', text: 'باقة كبيرة (120 جنيه)', price: 120 },
+                    { value: 'wifi_offer', text: 'عرض واي فاي (70 جنيه)', price: 70 },
+                    { value: 'printing_offer', text: 'عرض تصوير (80 جنيه)', price: 80 }
+                ]
+            };
+
             // Client Type Toggle
             $('#ctl00_ContentPlaceHolder1_ClientType').change(function () {
                 var clientType = $(this).val();
-                if (clientType === 'institution') {
-                    $('#institution-products').slideDown();
-                    $('#ctl00_ContentPlaceHolder1_ProductList').prop('required', true);
+                var $productList = $('#ctl00_ContentPlaceHolder1_ProductList');
+                $productList.empty().append('<option selected="selected" value="">اختر المنتج</option>');
+
+                if (clientType) {
+                    productLists[clientType].forEach(product => {
+                        $productList.append(`<option value="${product.value}">${product.text}</option>`);
+                    });
+                    $('#product-selection').slideDown();
+                    $productList.prop('required', true);
+                    $('#ctl00_ContentPlaceHolder1_Pages').prop('required', clientType === 'institution' || clientType === 'individual');
+                    $('#printing-pages').slideDown();
                 } else {
-                    $('#institution-products').slideUp();
-                    $('#ctl00_ContentPlaceHolder1_ProductList').prop('required', false);
+                    $('#product-selection').slideUp();
+                    $('#printing-pages').slideUp();
+                    $productList.prop('required', false);
+                    $('#ctl00_ContentPlaceHolder1_Pages').prop('required', false);
                     $('#ctl00_ContentPlaceHolder1_Value').val('');
                 }
             });
 
             // Price Update
-            $('#ctl00_ContentPlaceHolder1_ProductList').change(function () {
-                var product = $(this).val();
-                var prices = {
-                    'office_furniture': '15000 جنيه',
-                    'stationery': '3000 جنيه',
-                    'printers': '5000 جنيه'
-                };
-                $('#ctl00_ContentPlaceHolder1_Value').val(prices[product] || '');
-            });
+            function updateValue() {
+                var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
+                var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
+                var pages = parseInt($('#ctl00_ContentPlaceHolder1_Pages').val()) || 0;
+                var pageCost = clientType === 'institution' ? 0.5 : 0.65;
+                var productPrice = 0;
+
+                if (product) {
+                    productPrice = productLists[clientType].find(p => p.value === product)?.price || 0;
+                }
+
+                var total = productPrice + (pages * pageCost);
+                $('#ctl00_ContentPlaceHolder1_Value').val(total.toFixed(2) + ' جنيه');
+            }
+
+            $('#ctl00_ContentPlaceHolder1_ProductList').change(updateValue);
+            $('#ctl00_ContentPlaceHolder1_Pages').on('input', updateValue);
 
             // Vodafone Cash Payment
             function initiateVodafonePayment() {
-                var value = $("#ctl00_ContentPlaceHolder1_Value").val();
-                var clientType = $("#ctl00_ContentPlaceHolder1_ClientType").val();
-                var product = $("#ctl00_ContentPlaceHolder1_ProductList").val();
+                var value = parseFloat($('#ctl00_ContentPlaceHolder1_Value').val()) || 0;
+                var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
+                var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
+                var pages = $('#ctl00_ContentPlaceHolder1_Pages').val();
 
-                if (!clientType || (clientType === 'institution' && !product) || !value) {
-                    alert("يرجى اختيار نوع العميل والمنتج.");
+                if (!clientType || !product || !value || !pages) {
+                    alert("يرجى اختيار نوع العميل، المنتج، وعدد الصفحات.");
                     return;
                 }
 
-                var amount = parseInt(value) || 0;
-                var ussdCode = `*9*7*01007586279*${amount}#`;
+                var ussdCode = `*9*7*01007586279*${Math.round(value)}#`;
                 window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
             }
 
             // WhatsApp Submission
             function sendToWhatsApp() {
-                var clientType = $("#ctl00_ContentPlaceHolder1_ClientType").val();
-                var product = $("#ctl00_ContentPlaceHolder1_ProductList").val();
-                var value = $("#ctl00_ContentPlaceHolder1_Value").val();
+                var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
+                var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
+                var value = $('#ctl00_ContentPlaceHolder1_Value').val();
+                var pages = $('#ctl00_ContentPlaceHolder1_Pages').val();
 
-                if (!clientType || (clientType === 'institution' && !product) || !value) {
-                    alert("يرجى اختيار نوع العميل والمنتج قبل إرسال الطلب.");
+                if (!clientType || !product || !value || !pages) {
+                    alert("يرجى اختيار نوع العميل، المنتج، وعدد الصفحات قبل إرسال الطلب.");
                     return;
                 }
 
-                var productText = clientType === 'individual' ? 'فردي' : $("#ctl00_ContentPlaceHolder1_ProductList option:selected").text();
-                var message = `مرحبًا، أريد تأكيد طلب.\nنوع العميل: ${$("#ctl00_ContentPlaceHolder1_ClientType option:selected").text()}\nالمنتج: ${productText}\nالقيمة: ${value}\nيرجى إرفاق سكرين شوت الدفع.`;
+                var productText = $('#ctl00_ContentPlaceHolder1_ProductList option:selected').text();
+                var message = `مرحبًا، أريد تأكيد طلب.\nنوع العميل: ${$('#ctl00_ContentPlaceHolder1_ClientType option:selected').text()}\nالمنتج: ${productText}\nعدد الصفحات: ${pages}\nالقيمة: ${value}\nيرجى إرفاق سكرين شوت الدفع.`;
                 var whatsappUrl = `https://wa.me/+201007586279?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
 
+            // Game: Catch the Book
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 600;
+            canvas.height = 300;
+
+            let score = 0;
+            let books = [];
+            let lastTime = 0;
+
+            class Book {
+                constructor() {
+                    this.x = Math.random() * (canvas.width - 30);
+                    this.y = -30;
+                    this.width = 30;
+                    this.height = 40;
+                    this.speed = 2 + Math.random() * 2;
+                }
+
+                draw() {
+                    ctx.fillStyle = 'var(--accent)';
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
+
+                update() {
+                    this.y += this.speed;
+                    if (this.y > canvas.height) {
+                        books.splice(books.indexOf(this), 1);
+                    }
+                }
+            }
+
+            function animate(time) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                if (time - lastTime > 1000) {
+                    books.push(new Book());
+                    lastTime = time;
+                }
+                books.forEach(book => {
+                    book.update();
+                    book.draw();
+                });
+                ctx.fillStyle = 'white';
+                ctx.font = '20px Cairo';
+                ctx.fillText(`النقاط: ${score}`, 10, 30);
+                requestAnimationFrame(animate);
+            }
+
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+                books = books.filter(book => {
+                    if (clickX > book.x && clickX < book.x + book.width && clickY > book.y && clickY < book.y + book.height) {
+                        score += 10;
+                        return false;
+                    }
+                    return true;
+                });
+            });
+
+            animate(0);
+
             // Parallax Background
             $(window).scroll(function () {
                 var scroll = $(window).scrollTop();
-                $('body').css('background-position', `center ${scroll * 0.1}px`);
+                $('body').css('background-position', `center ${scroll * 0.15}px`);
             });
         </script>
     </form>
