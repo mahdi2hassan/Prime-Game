@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>تسجيل طلبات المنتجات - مكتبة بلس</title>
+    <title>مكتبة بلس</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="نموذج تسجيل طلبات المنتجات - منصة مكتبة بلس" />
 
@@ -46,6 +46,38 @@
             text-align: right;
             overflow-x: hidden;
             color: var(--text);
+            transition: color 0.3s, background 0.3s;
+        }
+
+        body.dark-mode {
+            --text: #e2e8f0; /* نصوص بيضاء في الوضع الليلي */
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--secondary);
+            border-top: 5px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .main {
@@ -68,8 +100,13 @@
             margin: 2rem auto;
             max-width: 800px;
             width: 100%;
-            position: relative;
-            z-index: 1;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .dark-mode .header, .dark-mode .form-container, .dark-mode .steps {
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .header img {
@@ -107,6 +144,26 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--secondary);
+            color: var(--text);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            z-index: 1001;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent);
+            transform: scale(1.05);
         }
 
         .carousel {
@@ -177,24 +234,26 @@
         .form-container .input-group {
             margin-bottom: 2rem;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .form-container .input-group-addon {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: var(--text);
-            padding: 0.8rem;
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
             display: flex;
             align-items: center;
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 100%;
+            font-size: 1.2rem;
+            color: var(--secondary);
+            transition: color 0.3s ease;
+        }
+
+        .form-container .input-group-addon:hover {
+            color: var(--accent);
         }
 
         .form-container .form-control {
             width: 100%;
-            padding: 1rem 1rem 0.5rem;
+            padding: 1rem;
             border: none;
             border-bottom: 2px solid rgba(0, 0, 0, 0.3);
             background: transparent;
@@ -202,6 +261,10 @@
             font-family: 'Cairo', sans-serif;
             font-size: clamp(0.9rem, 2vw, 1rem);
             transition: border-color 0.3s ease;
+        }
+
+        .dark-mode .form-control {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .form-container .form-control:focus {
@@ -217,6 +280,10 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             pointer-events: none;
+        }
+
+        .dark-mode .form-control + label {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .form-container .form-control:focus + label,
@@ -235,6 +302,17 @@
         .form-container .form-control[readonly] {
             background: rgba(0, 0, 0, 0.05);
             cursor: not-allowed;
+        }
+
+        .dark-mode .form-control[readonly] {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-container .product-desc {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-top: 0.5rem;
+            text-align: right;
         }
 
         .form-container .btn {
@@ -300,6 +378,10 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             border-right: 5px solid var(--accent);
+        }
+
+        .dark-mode .payment-note {
+            background: rgba(0, 0, 0, 0.95);
         }
 
         .form-container .whatsapp-notice {
@@ -376,6 +458,10 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
+        .dark-mode .steps li::after {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .steps li:last-child::after {
             display: none;
         }
@@ -404,6 +490,26 @@
             transform: rotate(360deg);
         }
 
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--secondary);
+            color: var(--text);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .back-to-top:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: clamp(1.8rem, 5vw, 2.2rem);
@@ -420,6 +526,11 @@
 
             .carousel-item {
                 width: clamp(200px, 25vw, 280px);
+            }
+
+            .theme-toggle, .back-to-top {
+                padding: 0.6rem;
+                font-size: 0.9rem;
             }
         }
 
@@ -449,6 +560,13 @@
     </style>
 </head>
 <body>
+    <div id="preloader" class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <button id="theme-toggle" class="theme-toggle">الوضع الليلي</button>
+    <button id="back-to-top" class="back-to-top"><i class="fas fa-arrow-up"></i></button>
+
     <form name="aspnetForm" method="post" action="./" id="aspnetForm" autocomplete="off">
         <div class="main">
             <div class="header" data-aos="fade-down">
@@ -496,6 +614,7 @@
                         </select>
                         <label>المنتج</label>
                     </div>
+                    <div id="product-description" class="product-desc"></div>
                 </div>
 
                 <div id="whatsapp-notice" style="display: none;" class="whatsapp-notice">
@@ -551,14 +670,19 @@
         </div>
 
         <script type="text/javascript">
-            // Initialize AOS
+            // إخفاء مؤشر التحميل عند اكتمال تحميل الصفحة
+            $(window).on('load', function() {
+                $('#preloader').fadeOut(500);
+            });
+
+            // تهيئة AOS للأنيميشن عند التمرير
             AOS.init({
                 duration: 1200,
                 once: true,
                 offset: 150
             });
 
-            // Animated Title
+            // أنيميشن عنوان الموقع
             const title = "مكتبة بلس";
             const titleElement = document.getElementById('animated-title');
             title.split('').forEach((char, index) => {
@@ -568,25 +692,25 @@
                 titleElement.appendChild(span);
             });
 
-            // Product Lists
+            // قائمة المنتجات
             const productLists = {
                 individual: [
-                    { value: 'school_books', text: 'كتب مدرسية (75 جنيه)', price: 75 },
-                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (50 جنيه)', price: 50 },
-                    { value: 'notebooks', text: 'دفاتر دراسية (30 جنيه)', price: 30 },
-                    { value: 'wifi_offer', text: 'عرض واي فاي (80 جنيه)', price: 80 },
-                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0 }
+                    { value: 'school_books', text: 'كتب مدرسية (75 جنيه)', price: 75, desc: 'تشمل كتب دراسية للمناهج المختلفة' },
+                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (50 جنيه)', price: 50, desc: 'أقلام، ممحاة، مسطرة، وأدوات أساسية' },
+                    { value: 'notebooks', text: 'دفاتر دراسية (30 جنيه)', price: 30, desc: 'دفاتر بأحجام وتصاميم متنوعة' },
+                    { value: 'wifi_offer', text: 'عرض واي فاي (80 جنيه)', price: 80, desc: 'اشتراك واي فاي لمدة 30 يومًا' },
+                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0, desc: 'تصوير مستندات حسب الطلب' }
                 ],
                 institution: [
-                    { value: 'school_books', text: 'كتب مدرسية (60 جنيه)', price: 60 },
-                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (40 جنيه)', price: 40 },
-                    { value: 'notebooks', text: 'دفاتر دراسية (25 جنيه)', price: 25 },
-                    { value: 'wifi_offer', text: 'عرض واي فاي (70 جنيه)', price: 70 },
-                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0 }
+                    { value: 'school_books', text: 'كتب مدرسية (60 جنيه)', price: 60, desc: 'تشمل كتب دراسية للمناهج المختلفة' },
+                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (40 جنيه)', price: 40, desc: 'أقلام، ممحاة، مسطرة، وأدوات أساسية' },
+                    { value: 'notebooks', text: 'دفاتر دراسية (25 جنيه)', price: 25, desc: 'دفاتر بأحجام وتصاميم متنوعة' },
+                    { value: 'wifi_offer', text: 'عرض واي فاي (70 جنيه)', price: 70, desc: 'اشتراك واي فاي لمدة 30 يومًا' },
+                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0, desc: 'تصوير مستندات حسب الطلب' }
                 ]
             };
 
-            // Client Type Toggle
+            // تبديل نوع العميل
             $('#ctl00_ContentPlaceHolder1_ClientType').change(function () {
                 var clientType = $(this).val();
                 var $productList = $('#ctl00_ContentPlaceHolder1_ProductList');
@@ -604,27 +728,31 @@
                     $('#ctl00_ContentPlaceHolder1_Value').val('');
                     $('#whatsapp-notice').slideUp();
                     $('#payButton').prop('disabled', true);
+                    $('#product-description').text('');
                 }
             });
 
-            // Price Update and WhatsApp Notice
+            // تحديث السعر وإظهار وصف المنتج
             $('#ctl00_ContentPlaceHolder1_ProductList').change(function () {
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
                 var product = $(this).val();
-                var productPrice = productLists[clientType].find(p => p.value === product)?.price || 0;
+                var productObj = productLists[clientType].find(p => p.value === product);
 
-                if (product === 'printing_offer') {
-                    $('#whatsapp-notice').slideDown();
-                    $('#payButton').prop('disabled', true);
-                    $('#ctl00_ContentPlaceHolder1_Value').val('يتم التأكيد عبر واتساب');
-                } else {
-                    $('#whatsapp-notice').slideUp();
-                    $('#payButton').prop('disabled', false);
-                    $('#ctl00_ContentPlaceHolder1_Value').val(productPrice.toFixed(2) + ' جنيه');
+                if (productObj) {
+                    if (product === 'printing_offer') {
+                        $('#whatsapp-notice').slideDown();
+                        $('#payButton').prop('disabled', true);
+                        $('#ctl00_ContentPlaceHolder1_Value').val('يتم التأكيد عبر واتساب');
+                    } else {
+                        $('#whatsapp-notice').slideUp();
+                        $('#payButton').prop('disabled', false);
+                        $('#ctl00_ContentPlaceHolder1_Value').val(productObj.price.toFixed(2) + ' جنيه');
+                    }
+                    $('#product-description').text(productObj.desc);
                 }
             });
 
-            // Vodafone Cash Payment
+            // دفع فودافون كاش
             function initiateVodafonePayment() {
                 var value = parseFloat($('#ctl00_ContentPlaceHolder1_Value').val()) || 0;
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
@@ -644,7 +772,7 @@
                 window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
             }
 
-            // WhatsApp Submission
+            // إرسال عبر واتساب
             function sendToWhatsApp() {
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
                 var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
@@ -661,7 +789,26 @@
                 window.open(whatsappUrl, '_blank');
             }
 
-            // Parallax Background
+            // تبديل الوضع الليلي
+            $('#theme-toggle').click(function() {
+                $('body').toggleClass('dark-mode');
+                $(this).text($('body').hasClass('dark-mode') ? 'الوضع النهاري' : 'الوضع الليلي');
+            });
+
+            // زر العودة للأعلى
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 200) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function() {
+                $('html, body').animate({ scrollTop: 0 }, 500);
+            });
+
+            // تأثير الخلفية عند التمرير
             $(window).scroll(function () {
                 var scroll = $(window).scrollTop();
                 $('body').css('background-position', `center ${scroll * 0.15}px`);
