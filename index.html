@@ -27,9 +27,9 @@
             --primary: #1e1b4b; /* إنديجو داكن */
             --secondary: #22d3ee; /* سيان نابض */
             --accent: #f472b6; /* بينك نيون */
-            --text: #f8fafc;
+            --text: #e2e8f0; /* رمادي فاتح للنصوص */
             --background: #111827;
-            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(255, 255, 255, 0.1);
             --glow: 0 0 20px rgba(244, 114, 182, 0.4);
             --border-radius: 24px;
         }
@@ -154,28 +154,6 @@
             100% { transform: translateX(-50%); }
         }
 
-        .game-container {
-            max-width: 800px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .game-container canvas {
-            width: 100%;
-            max-width: 600px;
-            height: 300px;
-            border-radius: var(--border-radius);
-            background: rgba(0, 0, 0, 0.3);
-        }
-
         .form-container {
             max-width: 800px;
             width: 100%;
@@ -192,9 +170,7 @@
 
         .form-container h3 {
             font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text);
             margin: 1.5rem 0 1rem;
             font-weight: 700;
             text-align: center;
@@ -222,7 +198,7 @@
             width: 100%;
             padding: 1rem 1rem 0.5rem;
             border: none;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
             background: transparent;
             color: var(--text);
             font-family: 'Cairo', sans-serif;
@@ -239,7 +215,7 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1rem;
             transition: all 0.3s ease;
             pointer-events: none;
@@ -279,6 +255,11 @@
             overflow: hidden;
         }
 
+        .form-container .btn:disabled {
+            background: #4b5563;
+            cursor: not-allowed;
+        }
+
         .form-container .btn::after {
             content: '';
             position: absolute;
@@ -292,12 +273,12 @@
             transition: width 0.6s ease, height 0.6s ease;
         }
 
-        .form-container .btn:hover::after {
+        .form-container .btn:not(:disabled):hover::after {
             width: 400px;
             height: 400px;
         }
 
-        .form-container .btn:hover {
+        .form-container .btn:not(:disabled):hover {
             transform: translateY(-3px);
             box-shadow: var(--glow);
         }
@@ -321,6 +302,16 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             border-right: 5px solid var(--accent);
+        }
+
+        .form-container .whatsapp-notice {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: #34d399;
+            margin: 1rem 0;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: var(--border-radius);
         }
 
         .steps {
@@ -388,6 +379,28 @@
 
         .steps li:last-child::after {
             display: none;
+        }
+
+        .game-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-container canvas {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            border-radius: var(--border-radius);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .footer {
@@ -481,12 +494,6 @@
                 </div>
             </div>
 
-            <div class="game-container" data-aos="fade-up">
-                <h3>العب لعبة "اجمع الكتاب"</h3>
-                <canvas id="gameCanvas"></canvas>
-                <p>اضغط على الكتب لتجميع النقاط!</p>
-            </div>
-
             <div class="form-container" data-aos="fade-up">
                 <h3 class="text-center alert alert-info">طلب المنتجات</h3>
 
@@ -518,16 +525,8 @@
                     </div>
                 </div>
 
-                <div id="printing-pages" style="display: none;">
-                    <h3>عدد الصفحات للتصوير</h3>
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <i class="fa fa-print"></i>
-                            <label class="alert-danger">(*)</label>
-                        </span>
-                        <input type="number" name="ctl00$ContentPlaceHolder1$Pages" id="ctl00_ContentPlaceHolder1_Pages" class="form-control" placeholder="أدخل عدد الصفحات" min="0" />
-                        <label>عدد الصفحات</label>
-                    </div>
+                <div id="whatsapp-notice" style="display: none;" class="whatsapp-notice">
+                    <p>لعرض التصوير، يرجى التأكيد عبر واتساب أولاً.</p>
                 </div>
 
                 <h3>القيمة</h3>
@@ -550,7 +549,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="button" id="payButton" class="btn" onclick="initiateVodafonePayment()">
+                        <button type="button" id="payButton" class="btn" onclick="initiateVodafonePayment()" disabled>
                             <i class="fas fa-wallet"></i> دفع عبر فودافون كاش
                         </button>
                         <button type="button" class="btn whatsapp-btn" onclick="sendToWhatsApp()">
@@ -567,6 +566,12 @@
                     <li>ادفع</li>
                     <li>احصل على الخدمة عبر واتساب</li>
                 </ul>
+            </div>
+
+            <div class="game-container" data-aos="fade-up">
+                <h3>العب لعبة "اجمع الكتاب"</h3>
+                <canvas id="gameCanvas"></canvas>
+                <p>اضغط على الكتب لتجميع النقاط!</p>
             </div>
 
             <div class="footer">
@@ -599,16 +604,18 @@
             // Product Lists
             const productLists = {
                 individual: [
-                    { value: 'small_package', text: 'باقة صغيرة (50 جنيه)', price: 50 },
-                    { value: 'large_package', text: 'باقة كبيرة (150 جنيه)', price: 150 },
+                    { value: 'school_books', text: 'كتب مدرسية (75 جنيه)', price: 75 },
+                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (50 جنيه)', price: 50 },
+                    { value: 'notebooks', text: 'دفاتر دراسية (30 جنيه)', price: 30 },
                     { value: 'wifi_offer', text: 'عرض واي فاي (80 جنيه)', price: 80 },
-                    { value: 'printing_offer', text: 'عرض تصوير (90 جنيه)', price: 90 }
+                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0 }
                 ],
                 institution: [
-                    { value: 'small_package', text: 'باقة صغيرة (40 جنيه)', price: 40 },
-                    { value: 'large_package', text: 'باقة كبيرة (120 جنيه)', price: 120 },
+                    { value: 'school_books', text: 'كتب مدرسية (60 جنيه)', price: 60 },
+                    { value: 'stationery_kit', text: 'مجموعة أدوات مكتبية (40 جنيه)', price: 40 },
+                    { value: 'notebooks', text: 'دفاتر دراسية (25 جنيه)', price: 25 },
                     { value: 'wifi_offer', text: 'عرض واي فاي (70 جنيه)', price: 70 },
-                    { value: 'printing_offer', text: 'عرض تصوير (80 جنيه)', price: 80 }
+                    { value: 'printing_offer', text: 'عرض تصوير (يتم التأكيد عبر واتساب)', price: 0 }
                 ]
             };
 
@@ -624,45 +631,45 @@
                     });
                     $('#product-selection').slideDown();
                     $productList.prop('required', true);
-                    $('#ctl00_ContentPlaceHolder1_Pages').prop('required', clientType === 'institution' || clientType === 'individual');
-                    $('#printing-pages').slideDown();
                 } else {
                     $('#product-selection').slideUp();
-                    $('#printing-pages').slideUp();
                     $productList.prop('required', false);
-                    $('#ctl00_ContentPlaceHolder1_Pages').prop('required', false);
                     $('#ctl00_ContentPlaceHolder1_Value').val('');
+                    $('#whatsapp-notice').slideUp();
+                    $('#payButton').prop('disabled', true);
                 }
             });
 
-            // Price Update
-            function updateValue() {
+            // Price Update and WhatsApp Notice
+            $('#ctl00_ContentPlaceHolder1_ProductList').change(function () {
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
-                var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
-                var pages = parseInt($('#ctl00_ContentPlaceHolder1_Pages').val()) || 0;
-                var pageCost = clientType === 'institution' ? 0.5 : 0.65;
-                var productPrice = 0;
+                var product = $(this).val();
+                var productPrice = productLists[clientType].find(p => p.value === product)?.price || 0;
 
-                if (product) {
-                    productPrice = productLists[clientType].find(p => p.value === product)?.price || 0;
+                if (product === 'printing_offer') {
+                    $('#whatsapp-notice').slideDown();
+                    $('#payButton').prop('disabled', true);
+                    $('#ctl00_ContentPlaceHolder1_Value').val('يتم التأكيد عبر واتساب');
+                } else {
+                    $('#whatsapp-notice').slideUp();
+                    $('#payButton').prop('disabled', false);
+                    $('#ctl00_ContentPlaceHolder1_Value').val(productPrice.toFixed(2) + ' جنيه');
                 }
-
-                var total = productPrice + (pages * pageCost);
-                $('#ctl00_ContentPlaceHolder1_Value').val(total.toFixed(2) + ' جنيه');
-            }
-
-            $('#ctl00_ContentPlaceHolder1_ProductList').change(updateValue);
-            $('#ctl00_ContentPlaceHolder1_Pages').on('input', updateValue);
+            });
 
             // Vodafone Cash Payment
             function initiateVodafonePayment() {
                 var value = parseFloat($('#ctl00_ContentPlaceHolder1_Value').val()) || 0;
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
                 var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
-                var pages = $('#ctl00_ContentPlaceHolder1_Pages').val();
 
-                if (!clientType || !product || !value || !pages) {
-                    alert("يرجى اختيار نوع العميل، المنتج، وعدد الصفحات.");
+                if (!clientType || !product) {
+                    alert("يرجى اختيار نوع العميل والمنتج.");
+                    return;
+                }
+
+                if (product === 'printing_offer') {
+                    alert("يرجى التأكيد عبر واتساب أولاً لعرض التصوير.");
                     return;
                 }
 
@@ -675,15 +682,14 @@
                 var clientType = $('#ctl00_ContentPlaceHolder1_ClientType').val();
                 var product = $('#ctl00_ContentPlaceHolder1_ProductList').val();
                 var value = $('#ctl00_ContentPlaceHolder1_Value').val();
-                var pages = $('#ctl00_ContentPlaceHolder1_Pages').val();
 
-                if (!clientType || !product || !value || !pages) {
-                    alert("يرجى اختيار نوع العميل، المنتج، وعدد الصفحات قبل إرسال الطلب.");
+                if (!clientType || !product) {
+                    alert("يرجى اختيار نوع العميل والمنتج قبل إرسال الطلب.");
                     return;
                 }
 
                 var productText = $('#ctl00_ContentPlaceHolder1_ProductList option:selected').text();
-                var message = `مرحبًا، أريد تأكيد طلب.\nنوع العميل: ${$('#ctl00_ContentPlaceHolder1_ClientType option:selected').text()}\nالمنتج: ${productText}\nعدد الصفحات: ${pages}\nالقيمة: ${value}\nيرجى إرفاق سكرين شوت الدفع.`;
+                var message = `مرحبًا، أريد تأكيد طلب.\nنوع العميل: ${$('#ctl00_ContentPlaceHolder1_ClientType option:selected').text()}\nالمنتج: ${productText}\nالقيمة: ${value}\nيرجى إرفاق سكرين شوت الدفع إن لزم الأمر.`;
                 var whatsappUrl = `https://wa.me/+201007586279?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
@@ -730,7 +736,7 @@
                     book.update();
                     book.draw();
                 });
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = 'var(--text)';
                 ctx.font = '20px Cairo';
                 ctx.fillText(`النقاط: ${score}`, 10, 30);
                 requestAnimationFrame(animate);
