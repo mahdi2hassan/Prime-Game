@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة المسابقة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            direction: rtl;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+        }
+
+        .game-info, .subscription, .game-preview {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info h2, .subscription h2, .game-preview h2 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .subscription form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .subscription input {
+            padding: 0.8rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .subscription button {
+            padding: 0.8rem;
+            background-color: #4ecdc4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .subscription button:hover {
+            background-color: #45b7aa;
+        }
+
+        .game-placeholder {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مسابقة اللعبة الشهرية</h1>
+        <p>اشترك بـ 10 جنيه عبر فودافون كاش واربح باقة إنترنت مجانية!</p>
+    </header>
+
+    <section class="game-info">
+        <h2>تفاصيل المسابقة</h2>
+        <p>مدة المسابقة: شهر كامل</p>
+        <p>الجائزة: باقة إنترنت مجانية لمدة شهر</p>
+        <p>اشترك الآن واستمتع باللعبة!</p>
+    </section>
+
+    <section class="subscription">
+        <h2>اشترك الآن</h2>
+        <form id="subscription-form">
+            <label for="phone">رقم الهاتف:</label>
+            <input type="tel" id="phone" name="phone" placeholder="01xxxxxxxxx" required>
+            <button type="submit">اشترك بـ 10 جنيه</button>
+        </form>
+        <p>للدفع عبر فودافون كاش، اطلب الكود *9*10# بعد إدخال رقمك.</p>
+    </section>
+
+    <section class="game-preview">
+        <h2>جرب اللعبة</h2>
+        <div class="game-placeholder">عرض اللعبة (سيتم إضافتها لاحقًا)</div>
+    </section>
+
+    <footer>
+        <p>© 2025 مسابقة اللعبة. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        document.getElementById('subscription-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            if (phone.match(/^01[0-2,5]\d{8}$/)) {
+                alert(`تم تسجيل اشتراكك! اطلب *9*10# لدفع 10 جنيه عبر فودافون كاش.`);
+            } else {
+                alert('الرجاء إدخال رقم هاتف صحيح.');
+            }
+        });
+    </script>
+</body>
+</html>
