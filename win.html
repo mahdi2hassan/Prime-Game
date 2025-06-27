@@ -336,10 +336,7 @@
             width: 100%;
             margin: 2rem auto;
             padding: 2rem;
-            background: var(--card-bg);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            background: transparent; /* إزالة الخلفية البيضاء */
             text-align: center;
             position: relative;
         }
@@ -355,9 +352,14 @@
             margin: 0 auto;
             width: 320px;
             height: 320px;
-            background: url('wheel-bg.png') center/cover no-repeat; /* صورة خلفية للعجلة */
+            background: transparent; /* خلفية شفافة */
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .wheel-container:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 15px var(--accent));
         }
 
         #wheelCanvas {
@@ -366,6 +368,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
+            cursor: pointer;
         }
 
         .wheel-pointer {
@@ -380,50 +383,6 @@
             border-bottom: 30px solid var(--accent);
             z-index: 10;
             filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
-        }
-
-        .wheel-button {
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: var(--text);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-family: 'Cairo', sans-serif;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin: 1rem auto;
-            display: block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wheel-button:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-        }
-
-        .wheel-button:not(:disabled):hover {
-            transform: translateY(-3px);
-            box-shadow: var(--glow);
-        }
-
-        .wheel-button::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
-        }
-
-        .wheel-button:not(:disabled):hover::after {
-            width: 400px;
-            height: 400px;
         }
 
         .wheel-result {
@@ -732,13 +691,12 @@
             <div class="game-preview" data-aos="fade-up">
                 <h3>جرب عجلة الحظ</h3>
                 <div class="wheel-instructions">
-                    <p>اضغط على الزر لتدوير العجلة! محاولة واحدة كل 25 ساعة، أو محاولة فورية إذا حصلت على "جرب تاني".</p>
+                    <p>اضغط على العجلة لتدويرها! محاولة واحدة كل 25 ساعة.</p>
                 </div>
                 <div class="wheel-container">
                     <div class="wheel-pointer"></div>
                     <canvas id="wheelCanvas"></canvas>
                 </div>
-                <button id="spinButton" class="wheel-button">دور العجلة</button>
                 <div id="wheelResult" class="wheel-result"></div>
             </div>
 
@@ -747,7 +705,7 @@
                 <ul>
                     <li>أدخل رقم الهاتف واختر عدد الأسهم</li>
                     <li>ادفع عبر فودافون كاش باستخدام الكود</li>
-                    <li>جرب عجلة الحظ لفرصة ربح خصومات</li>
+                    <li>اضغط على عجلة الحظ لربح خصم 5%</li>
                     <li>أكد الاشتراك عبر واتساب</li>
                     <li>استمتع باللعبة واربح الجائزة!</li>
                 </ul>
@@ -883,11 +841,11 @@
                 'textOrientation': 'curved',
                 'textDirection': 'reversed',
                 'segments': [
-                    { 'fillStyle': '#22d3ee', 'text': '5% خصم', 'value': '5% خصم' },
-                    { 'fillStyle': '#f472b6', 'text': 'جرب تاني', 'value': 'جرب تاني' },
-                    { 'fillStyle': '#1e1b4b', 'text': 'حظ أوفر', 'value': 'حظ أوفر' },
-                    { 'fillStyle': '#22d3ee', 'text': '5% خصم', 'value': '10% خصم' },
-                    { 'fillStyle': '#f472b6', 'text': 'جرب تاني', 'value': '10 جنيه كاش باك' }
+                    { 'fillStyle': '#22d3ee', 'text': 'خصم 5%', 'value': 'خصم 5%' },
+                    { 'fillStyle': '#22d3ee', 'text': 'خصم 5%', 'value': 'خصم 5%' },
+                    { 'fillStyle': '#22d3ee', 'text': 'خصم 5%', 'value': 'خصم 5%' },
+                    { 'fillStyle': '#22d3ee', 'text': 'خصم 5%', 'value': 'خصم 5%' },
+                    { 'fillStyle': '#22d3ee', 'text': 'خصم 5%', 'value': 'خصم 5%' }
                 ],
                 'animation': {
                     'type': 'spinToStop',
@@ -907,51 +865,48 @@
 
             function checkSpinEligibility() {
                 const lastSpin = localStorage.getItem('lastSpinTime');
-                const lastResult = localStorage.getItem('lastSpinResult');
                 const now = new Date().getTime();
                 const hours25 = 25 * 60 * 60 * 1000; // 25 ساعة بالميلي ثانية
 
-                if (!lastSpin || lastResult === 'جرب تاني' || (now - lastSpin) >= hours25) {
-                    $('#spinButton').prop('disabled', false);
+                if (!lastSpin || (now - lastSpin) >= hours25) {
+                    $('#wheelCanvas').css('cursor', 'pointer');
                     $('#wheelResult').text('').hide();
+                    return true;
                 } else {
-                    $('#spinButton').prop('disabled', true);
+                    $('#wheelCanvas').css('cursor', 'not-allowed');
                     const timeLeft = hours25 - (now - lastSpin);
                     const hours = Math.floor(timeLeft / (60 * 60 * 1000));
                     const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
                     $('#wheelResult').text(`المحاولة القادمة بعد ${hours} ساعة و ${minutes} دقيقة`).show();
+                    return false;
                 }
             }
 
             function displayResult(indicatedSegment) {
-                const result = indicatedSegment.value; // استخدام القيمة الحقيقية
+                const result = indicatedSegment.value; // دائمًا "خصم 5%"
                 $('#wheelResult').text(`مبروك! لقد حصلت على: ${result}`).show();
                 localStorage.setItem('lastSpinTime', new Date().getTime());
                 localStorage.setItem('lastSpinResult', result);
-                $('#spinButton').prop('disabled', true);
-                checkSpinEligibility();
+                $('#wheelCanvas').css('cursor', 'not-allowed');
                 gsap.to('.wheel-pointer', { rotation: 10, yoyo: true, repeat: 1, duration: 0.2 });
+                gsap.to('.wheel-container', { filter: 'drop-shadow(0 0 20px var(--accent))', duration: 0.5 });
             }
 
-            $('#spinButton').click(function() {
-                if (!$(this).prop('disabled')) {
-                    $(this).addClass('loading');
+            $('#wheelCanvas').click(function() {
+                if (checkSpinEligibility()) {
                     gsap.to('.wheel-container', { scale: 1.05, duration: 0.3 });
                     theWheel.startAnimation();
                     // إضافة صوت دوران (تعليق للتفعيل)
                     // let spinSound = new Audio('spin-sound.mp3');
                     // spinSound.play();
                     setTimeout(() => {
-                        $(this).removeClass('loading');
+                        $('#wheelCanvas').css('cursor', 'not-allowed');
                     }, 5000); // مدة الأنيميشن
                 } else {
-                    const lastResult = localStorage.getItem('lastSpinResult');
-                    if (lastResult !== 'جرب تاني') {
-                        const timeLeft = 25 * 60 * 60 * 1000 - (new Date().getTime() - localStorage.getItem('lastSpinTime'));
-                        const hours = Math.floor(timeLeft / (60 * 60 * 1000));
-                        const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
-                        alert(`عذرًا، يمكنك المحاولة مرة أخرى بعد ${hours} ساعة و ${minutes} دقيقة`);
-                    }
+                    const timeLeft = 25 * 60 * 60 * 1000 - (new Date().getTime() - localStorage.getItem('lastSpinTime'));
+                    const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+                    const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+                    alert(`عذرًا، يمكنك المحاولة مرة أخرى بعد ${hours} ساعة و ${minutes} دقيقة`);
                 }
             });
 
