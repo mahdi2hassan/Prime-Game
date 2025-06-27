@@ -16,13 +16,15 @@
     <!-- AOS for Scroll Animations -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 
+    <!-- Winwheel.js for Wheel of Fortune -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Winwheel/1.2.3/Winwheel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <!-- AOS JS -->
-    <script src="https://unpkg
-
-.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <style type="text/css">
         :root {
@@ -48,12 +50,7 @@
             text-align: right;
             overflow-x: hidden;
             color: var(--text);
-            transition: color 0.3s, background 0.3s;
-        }
-
-        body.dark-mode {
-            --text: #e2e8f0; /* نصوص بيضاء في الوضع الليلي */
-            --card-bg: rgba(0, 0, 0, 0.7);
+            transition: background 0.3s;
         }
 
         .preloader {
@@ -107,23 +104,6 @@
             z-index: 1000;
         }
 
-        .dark-mode .header, .dark-mode .form-container, .dark-mode .steps {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .header img {
-            width: clamp(160px, 22vw, 200px);
-            height: auto;
-            margin: 0 auto 1.5rem;
-            display: block;
-            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
-            transition: transform 0.4s ease;
-        }
-
-        .header img:hover {
-            transform: rotate(5deg) scale(1.1);
-        }
-
         .header h1 {
             font-size: clamp(2.2rem, 6vw, 3.2rem);
             font-weight: 900;
@@ -148,26 +128,6 @@
             }
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--secondary);
-            color: var(--text);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            z-index: 1001;
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        .theme-toggle:hover {
-            background: var(--accent);
-            transform: scale(1.05);
-        }
-
         .carousel {
             width: 100%;
             max-width: 1200px;
@@ -179,7 +139,7 @@
 
         .carousel-track {
             display: flex;
-            animation: scroll 30s linear infinite;
+            animation: scroll 15s linear infinite;
             will-change: transform;
         }
 
@@ -265,10 +225,6 @@
             transition: border-color 0.3s ease;
         }
 
-        .dark-mode .form-control {
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
         .form-container .form-control:focus {
             border-color: var(--accent);
             outline: none;
@@ -282,10 +238,6 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             pointer-events: none;
-        }
-
-        .dark-mode .form-control + label {
-            color: rgba(255, 255, 255, 0.7);
         }
 
         .form-container .form-control:focus + label,
@@ -304,17 +256,6 @@
         .form-container .form-control[readonly] {
             background: rgba(0, 0, 0, 0.05);
             cursor: not-allowed;
-        }
-
-        .dark-mode .form-control[readonly] {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .form-container .product-desc {
-            font-size: 0.9rem;
-            color: var(--text);
-            margin-top: 0.5rem;
-            text-align: right;
         }
 
         .form-container .btn {
@@ -365,6 +306,14 @@
             background: linear-gradient(135deg, #25D366, #128C7E);
         }
 
+        .form-container .btn.loading::before {
+            content: '\f1ce';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            margin-left: 10px;
+            animation: spin 1s linear infinite;
+        }
+
         .form-container .alert-danger {
             color: #ef4444;
             font-size: clamp(0.8rem, 2vw, 0.9rem);
@@ -382,8 +331,71 @@
             border-right: 5px solid var(--accent);
         }
 
-        .dark-mode .payment-note {
-            background: rgba(0, 0, 0, 0.95);
+        .game-preview {
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .game-preview h3 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .wheel-container {
+            position: relative;
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wheel-button {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--text);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Cairo', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 1rem auto;
+            display: block;
+        }
+
+        .wheel-button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+        }
+
+        .wheel-button:not(:disabled):hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .wheel-result {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--accent);
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .wheel-instructions {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: var(--text);
+            margin: 1rem 0;
         }
 
         .steps {
@@ -449,10 +461,6 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
-        .dark-mode .steps li::after {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
         .steps li:last-child::after {
             display: none;
         }
@@ -501,16 +509,24 @@
             transform: scale(1.1);
         }
 
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+        }
+
+        .button-group .btn {
+            flex: 1;
+            min-width: 250px;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: clamp(1.8rem, 5vw, 2.2rem);
             }
 
-            .header img {
-                width: clamp(120px, 18vw, 160px);
-            }
-
-            .form-container, .steps {
+            .form-container, .steps, .game-preview {
                 padding: 2rem;
                 max-width: 90%;
             }
@@ -519,9 +535,22 @@
                 width: clamp(200px, 25vw, 280px);
             }
 
-            .theme-toggle, .back-to-top {
+            .wheel-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .back-to-top {
                 padding: 0.6rem;
                 font-size: 0.9rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button-group .btn {
+                min-width: 100%;
             }
         }
 
@@ -531,16 +560,17 @@
                 margin: 1rem auto;
             }
 
-            .header img {
-                width: clamp(100px, 15vw, 120px);
-            }
-
-            .form-container, .steps {
+            .form-container, .steps, .game-preview {
                 padding: 1.5rem;
             }
 
-            .form-container h3, .steps h3 {
+            .form-container h3, .steps h3, .game-preview h3 {
                 font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+            }
+
+            .wheel-container {
+                width: 200px;
+                height: 200px;
             }
 
             .footer .social-icons a {
@@ -555,13 +585,11 @@
         <div class="spinner"></div>
     </div>
 
-    <button id="theme-toggle" class="theme-toggle">الوضع الليلي</button>
     <button id="back-to-top" class="back-to-top"><i class="fas fa-arrow-up"></i></button>
 
     <form name="aspnetForm" method="post" action="./" id="aspnetForm" autocomplete="off">
         <div class="main">
             <div class="header" data-aos="fade-down">
-                <img src="nn.png" alt="شعار مسابقة اللعبة" />
                 <h1 id="animated-title"></h1>
             </div>
 
@@ -570,15 +598,15 @@
                     <div class="carousel-item"><img src="game1.png" alt="لعبة 1" /></div>
                     <div class="carousel-item"><img src="game2.png" alt="لعبة 2" /></div>
                     <div class="carousel-item"><img src="game3.png" alt="لعبة 3" /></div>
-                    <div class="carousel-item"><img src="game4.png" alt="لعبة 1" /></div>
-                    <div class="carousel-item"><img src="game5.png" alt="لعبة 2" /></div>
-                    <div class="carousel-item"><img src="game6.png" alt="لعبة 3" /></div>
-                                     <div class="carousel-item"><img src="game1.png" alt="لعبة 1" /></div>
+                    <div class="carousel-item"><img src="game4.png" alt="لعبة 4" /></div>
+                    <div class="carousel-item"><img src="game5.png" alt="لعبة 5" /></div>
+                    <div class="carousel-item"><img src="game6.png" alt="لعبة 6" /></div>
+                    <div class="carousel-item"><img src="game1.png" alt="لعبة 1" /></div>
                     <div class="carousel-item"><img src="game2.png" alt="لعبة 2" /></div>
                     <div class="carousel-item"><img src="game3.png" alt="لعبة 3" /></div>
-                    <div class="carousel-item"><img src="game4.png" alt="لعبة 1" /></div>
-                    <div class="carousel-item"><img src="game5.png" alt="لعبة 2" /></div>
-                    <div class="carousel-item"><img src="game6.png" alt="لعبة 3" /></div>
+                    <div class="carousel-item"><img src="game4.png" alt="لعبة 4" /></div>
+                    <div class="carousel-item"><img src="game5.png" alt="لعبة 5" /></div>
+                    <div class="carousel-item"><img src="game6.png" alt="لعبة 6" /></div>
                 </div>
             </div>
 
@@ -631,19 +659,29 @@
                     </ul>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" id="payButton1" class="btn" onclick="initiateVodafonePayment('01007586279')" disabled>
-                            <i class="fas fa-wallet"></i> دفع عبر فودافون كاش (01007586279)
-                        </button>
-                        <button type="button" id="payButton2" class="btn" onclick="initiateVodafonePayment('01153652279')" disabled>
-                            <i class="fas fa-wallet"></i> دفع عبر فودافون كاش (01153652279)
-                        </button>
-                        <button type="button" class="btn whatsapp-btn" onclick="sendToWhatsApp()">
-                            <i class="fab fa-whatsapp"></i> تأكيد الاشتراك عبر واتساب
-                        </button>
-                    </div>
+                <div class="button-group">
+                    <button type="button" id="payButton1" class="btn" onclick="initiateVodafonePayment('01007586279')" disabled>
+                        <i class="fas fa-wallet"></i> دفع عبر فودافون كاش (01007586279)
+                    </button>
+                    <button type="button" id="payButton2" class="btn" onclick="initiateVodafonePayment('01153652279')" disabled>
+                        <i class="fas fa-wallet"></i> دفع عبر فودافون كاش (01153652279)
+                    </button>
+                    <button type="button" id="whatsappButton" class="btn whatsapp-btn" onclick="sendToWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> تأكيد الاشتراك عبر واتساب
+                    </button>
                 </div>
+            </div>
+
+            <div class="game-preview" data-aos="fade-up">
+                <h3>جرب عجلة الحظ</h3>
+                <div class="wheel-instructions">
+                    <p>اضغط على الزر لتدوير العجلة! محاولة واحدة كل 25 ساعة، أو محاولة فورية إذا حصلت على "جرب تاني".</p>
+                </div>
+                <div class="wheel-container">
+                    <canvas id="wheelCanvas"></canvas>
+                </div>
+                <button id="spinButton" class="wheel-button">دور العجلة</button>
+                <div id="wheelResult" class="wheel-result"></div>
             </div>
 
             <div class="steps" data-aos="fade-up">
@@ -651,6 +689,7 @@
                 <ul>
                     <li>أدخل رقم الهاتف واختر عدد الأسهم</li>
                     <li>ادفع عبر فودافون كاش باستخدام الكود</li>
+                    <li>جرب عجلة الحظ لفرصة ربح خصومات</li>
                     <li>أكد الاشتراك عبر واتساب</li>
                     <li>استمتع باللعبة واربح الجائزة!</li>
                 </ul>
@@ -689,11 +728,19 @@
             });
 
             // تحديث القيمة بناءً على عدد الأسهم
+            let selectedVodafoneNumber = '';
             $('#ctl00_ContentPlaceHolder1_Shares').change(function () {
                 var shares = parseInt($(this).val()) || 0;
                 var total = shares * 10;
                 $('#ctl00_ContentPlaceHolder1_Value').val(total.toFixed(2) + ' جنيه');
-                $('#payButton1, #payButton2').prop('disabled', shares === 0);
+                $('#payButton1, #payButton2, #whatsappButton').prop('disabled', shares === 0 || !$('#ctl00_ContentPlaceHolder1_Phone').val().match(/^01[0-2,5]\d{8}$/));
+            });
+
+            // التحقق من رقم الهاتف أثناء الكتابة
+            $('#ctl00_ContentPlaceHolder1_Phone').on('input', function() {
+                var phone = $(this).val();
+                var shares = parseInt($('#ctl00_ContentPlaceHolder1_Shares').val()) || 0;
+                $('#payButton1, #payButton2, #whatsappButton').prop('disabled', shares === 0 || !phone.match(/^01[0-2,5]\d{8}$/));
             });
 
             // دفع فودافون كاش
@@ -701,6 +748,7 @@
                 var phone = $('#ctl00_ContentPlaceHolder1_Phone').val();
                 var shares = parseInt($('#ctl00_ContentPlaceHolder1_Shares').val()) || 0;
                 var total = shares * 10;
+                var ussdCode = `*9*7*${phoneNumber}*${total}#`;
 
                 if (!phone.match(/^01[0-2,5]\d{8}$/)) {
                     alert("يرجى إدخال رقم هاتف صحيح.");
@@ -712,8 +760,12 @@
                     return;
                 }
 
-                var ussdCode = `*9*7*${phoneNumber}*${total}#`;
-                window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
+                selectedVodafoneNumber = phoneNumber;
+                $('#payButton1, #payButton2').addClass('loading');
+                setTimeout(() => {
+                    window.location.href = `tel:${encodeURIComponent(ussdCode)}`;
+                    $('#payButton1, #payButton2').removeClass('loading');
+                }, 1000);
             }
 
             // إرسال عبر واتساب
@@ -721,6 +773,7 @@
                 var phone = $('#ctl00_ContentPlaceHolder1_Phone').val();
                 var shares = parseInt($('#ctl00_ContentPlaceHolder1_Shares').val()) || 0;
                 var total = shares * 10;
+                var wheelResult = $('#wheelResult').text() || 'لم يتم لعب العجلة بعد';
 
                 if (!phone.match(/^01[0-2,5]\d{8}$/)) {
                     alert("يرجى إدخال رقم هاتف صحيح.");
@@ -732,16 +785,14 @@
                     return;
                 }
 
-                var message = `تأكيد اشتراك في مسابقة اللعبة\nرقم الهاتف: ${phone}\nعدد الأسهم: ${shares}\nالقيمة: ${total} جنيه\nيرجى إرفاق سكرين شوت الدفع إن لزم الأمر.`;
+                var message = `تأكيد اشتراك في مسابقة اللعبة\nرقم الهاتف: ${phone}\nعدد الأسهم: ${shares}\nالقيمة: ${total} جنيه\nكود الدفع: *9*7*${selectedVodafoneNumber || '01007586279'}*${total}#\nنتيجة عجلة الحظ: ${wheelResult}\nيرجى إرفاق سكرين شوت الدفع إن لزم الأمر.`;
                 var whatsappUrl = `https://wa.me/+201007586279?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
+                $('#whatsappButton').addClass('loading');
+                setTimeout(() => {
+                    window.open(whatsappUrl, '_blank');
+                    $('#whatsappButton').removeClass('loading');
+                }, 1000);
             }
-
-            // تبديل الوضع الليلي
-            $('#theme-toggle').click(function() {
-                $('body').toggleClass('dark-mode');
-                $(this).text($('body').hasClass('dark-mode') ? 'الوضع النهاري' : 'الوضع الليلي');
-            });
 
             // زر العودة للأعلى
             $(window).scroll(function() {
@@ -761,6 +812,70 @@
                 var scroll = $(window).scrollTop();
                 $('body').css('background-position', `center ${scroll * 0.15}px`);
             });
+
+            // عجلة الحظ
+            let theWheel = new Winwheel({
+                'canvasId': 'wheelCanvas',
+                'numSegments': 5,
+                'outerRadius': 150,
+                'textFontSize': 16,
+                'textFontFamily': 'Cairo',
+                'textAlignment': 'center',
+                'textOrientation': 'curved',
+                'textDirection': 'reversed',
+                'segments': [
+                    { 'fillStyle': '#22d3ee', 'text': '5% خصم', 'value': '5% خصم' },
+                    { 'fillStyle': '#f472b6', 'text': 'جرب تاني', 'value': 'جرب تاني' },
+                    { 'fillStyle': '#1e1b4b', 'text': 'حظ أوفر', 'value': 'حظ أوفر' },
+                    { 'fillStyle': '#22d3ee', 'text': '5% خصم', 'value': '10% خصم' },
+                    { 'fillStyle': '#f472b6', 'text': 'جرب تاني', 'value': '10 جنيه كاش باك' }
+                ],
+                'animation': {
+                    'type': 'spinToStop',
+                    'duration': 5,
+                    'spins': 8,
+                    'callbackFinished': displayResult
+                }
+            });
+
+            function checkSpinEligibility() {
+                const lastSpin = localStorage.getItem('lastSpinTime');
+                const lastResult = localStorage.getItem('lastSpinResult');
+                const now = new Date().getTime();
+                const hours25 = 25 * 60 * 60 * 1000; // 25 ساعة بالميلي ثانية
+
+                if (!lastSpin || lastResult === 'جرب تاني' || (now - lastSpin) >= hours25) {
+                    $('#spinButton').prop('disabled', false);
+                } else {
+                    $('#spinButton').prop('disabled', true);
+                    const timeLeft = hours25 - (now - lastSpin);
+                    const hours = Math.floor(timeLeft / (60 * 60 * 1000));
+                    const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+                    $('#wheelResult').text(`المحاولة القادمة بعد ${hours} ساعة و ${minutes} دقيقة`).show();
+                }
+            }
+
+            function displayResult(indicatedSegment) {
+                const result = indicatedSegment.value; // استخدام القيمة الحقيقية
+                $('#wheelResult').text(`مبروك! لقد حصلت على: ${result}`).show();
+                localStorage.setItem('lastSpinTime', new Date().getTime());
+                localStorage.setItem('lastSpinResult', result);
+                $('#spinButton').prop('disabled', true);
+                checkSpinEligibility();
+            }
+
+            $('#spinButton').click(function() {
+                if (!$(this).prop('disabled')) {
+                    $(this).addClass('loading');
+                    theWheel.startAnimation();
+                    setTimeout(() => {
+                        $(this).removeClass('loading');
+                    }, 5000); // مدة الأنيميشن
+                }
+            });
+
+            // تحقق من أهلية الدوران عند تحميل الصفحة
+            checkSpinEligibility();
         </script>
     </form>
 </body>
