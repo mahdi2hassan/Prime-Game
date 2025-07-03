@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - خدمات التسجيل الإلكتروني</title>
+    <title>تسجيل الدخول التلقائي - خدمات التسجيل الإلكتروني</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -53,6 +53,12 @@
             color: #007bff;
             text-decoration: none;
         }
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
         .footer {
             text-align: center;
             padding: 1rem;
@@ -82,7 +88,7 @@
 <body>
     <form id="aspnetForm" method="post" action="ed_login.aspx">
         <!-- Hidden Inputs for ASP.NET -->
-        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wEPDwUKLTM0NDAzNDI3Ng9kFgJmD2QWAgIDD2QWBgIDD2QWAmYPZBYWAgEPDxYEHghJbWFnZVVybAUofi9Eb2N1bWVudHMvLzIvMTc2NjM0MTY1MjQyODQ1ODc0NTUwLkpQRx4HVmlzaWJsZWdkZAIFDw8WAh4EVGV4dAUa2KzYp9mF2LnYqSDYqNmG2Yog2LPZiNmK2YFkZAINDw8WAh8BaGRkAg8PDxYCHwFoZGQCEQ8PFgIfAWhkZAITDw8WAh8BaGRkAhUPDxYCHwFoZGQCFw8PFgIfAWhkZAIZDw8WAh8BaGRkAhsPDxYCHwFoZGQCIQ9kFgICAQ8PFgIfAWhkZAIHDxYCHwFoZAIJD2QWAgIBD2QWAmYPZBYEAgUPD2QWAhევ0xI4SQ7vdLqlJQhXWMaiv4MOGzbJjlUj8rLA1m0&t=fffffffffa2fd9a5" />
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wEPDwUKLTM0NDAzNDI3Ng9kFgJmD2QWAgIDD2QWBgIDD2QWAmYPZBYWAgEPDxYEHghJbWFnZVVybAUofi9Eb2N1bWVudHMvLzIvMTc2NjM0MTY1MjQyODQ1ODc0NTUwLkpQRx4HVmlzaWJsZWdkZAIFDw8WAh4EVGV4dAUa2KzYp9mF2LnYqSDYqNmG2Yog2LPZiNmK2YFkZAINDw8WAh8BaGRkAg8PDxYCHwFoZGQCEQ8PFgIfAWhkZAITDw8WAh8BaGRkAhUPDxYCHwFoZGQCFw8PFgIfAWhkZAIZDw8WAh8BaGRkAhsPDxYCHwFoZGQCIQ9kFgICAQ8PFgIfAWhkZAIHDxYCHwFoZAIJD2QWAgIBD2QWAmYPZBYEAgUPD2QWAh4Hb25mb2N1cwU8X19kb1Bvc3RCYWNrKCdjdGwwMCRjbnRwaG1hc3RlciRidG5UZXh0c3R1ZEV2ZW50SGFuZGxlcicsJycpZAINDw9kFgIfAwU7X19kb1Bvc3RCYWNrKCdjdGwwMCRjbnRwaG1hc3RlciRidG5UZXh0Qm94RXZlbnRIYW5kbGVyJywnJylkZBZA5lzbL1sajVGE9f2o37Sw+Vfr" />
         <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="3639424D" />
         <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="wEWBwKwlYboCwL74ceMBgKXr42PBwKvxqvoDgKiz4vHBALCu9PyDwKNstf4Awu/6Ui2JWBXIbsn9yxy2qn8+7Lt" />
 
@@ -95,16 +101,14 @@
 
         <!-- Login Form -->
         <div class="login-container">
-            <h3 class="text-center mb-4">بيانات الدخول</h3>
+            <h3 class="text-center mb-4">تسجيل الدخول التلقrello
+
             <div class="mb-3">
-                <label for="ctl00_cntphmaster_txt_StudCode" class="form-label">اسم المستخدم</label>
-                <input type="text" class="form-control" id="ctl00_cntphmaster_txt_StudCode" name="ctl00$cntphmaster$txt_StudCode" placeholder="الرقم القومي - كود الطالب" required>
+                <label for="ctl00_cntphmaster_txt_NationalID" class="form-label">الرقم القومي</label>
+                <input type="text" class="form-control" id="ctl00_cntphmaster_txt_NationalID" name="ctl00$cntphmaster$txt_NationalID" placeholder="أدخل الرقم القومي (14 رقمًا)" required maxlength="14">
             </div>
-            <div class="mb-3">
-                <label for="ctl00_cntphmaster_txt_Nationalnum" class="form-label">كلمة السر</label>
-                <input type="password" class="form-control" id="ctl00_cntphmaster_txt_Nationalnum" name="ctl00$cntphmaster$txt_Nationalnum" placeholder="الرقم القومي - الرقم التعريفي" required>
-            </div>
-            <button type="submit" name="ctl00$cntphmaster$btn_Login" class="btn btn-primary">تسجيل الدخول</button>
+            <button type="submit" name="ctl00$cntphmaster$btn_Login" class="btn btn-primary" id="loginButton">تسجيل الدخول</button>
+            <div id="errorMessage" class="error-message">الرقم القومي غير صحيح</div>
             <a href="javascript:__doPostBack('ctl00$cntphmaster$lbeditpassword','')" class="forgot-password">نسيت كلمة المرور؟</a>
         </div>
 
@@ -120,24 +124,28 @@
     <!-- Bootstrap JS and Custom Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Clear input fields on focus
-        document.getElementById('ctl00_cntphmaster_txt_StudCode').addEventListener('focus', function() {
-            this.value = '';
-        });
-        document.getElementById('ctl00_cntphmaster_txt_Nationalnum').addEventListener('focus', function() {
-            this.value = '';
+        // Auto-submit form when a valid 14-digit national ID is entered
+        document.getElementById('ctl00_cntphmaster_txt_NationalID').addEventListener('input', function() {
+            const nationalID = this.value;
+            const errorMessage = document.getElementById('errorMessage');
+            if (nationalID.length === 14 && /^\d{14}$/.test(nationalID)) {
+                errorMessage.style.display = 'none';
+                // Populate hidden fields for compatibility (assuming national ID is used for both fields)
+                document.getElementById('ctl00_cntphmaster_txt_StudCode').value = nationalID;
+                document.getElementById('ctl00_cntphmaster_txt_Nationalnum').value = nationalID;
+                document.getElementById('aspnetForm').submit();
+            } else if (nationalID.length > 0) {
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+            }
         });
 
-        // Language switching functions
-        function LangEn() {
-            document.getElementById('ctl00_cmblanuages').value = 'English';
-        }
-        function LangAr() {
-            document.getElementById('ctl00_cmblanuages').value = 'Arabic';
-        }
-        function openInNewTab(url) {
-            window.open(url, '_blank').focus();
-        }
+        // Clear input on focus
+        document.getElementById('ctl00_cntphmaster_txt_NationalID').addEventListener('focus', function() {
+            this.value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        });
 
         // Prevent going back
         history.forward();
