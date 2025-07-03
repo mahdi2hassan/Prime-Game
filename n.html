@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - خدمات التسجيل الإلكتروني</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f7fa;
+            direction: rtl;
+            text-align: right;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .header img {
+            max-width: 100px;
+            height: auto;
+        }
+        .header h1, .header h2 {
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+        .login-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-control {
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #e9ecef;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 576px) {
+            .login-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            .header img {
+                max-width: 80px;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+    <!-- Google Fonts for Arabic Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form id="aspnetForm" method="post" action="ed_login.aspx">
+        <!-- Hidden Inputs for ASP.NET -->
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wEPDwUKLTM0NDAzNDI3Ng9kFgJmD2QWAgIDD2QWBgIDD2QWAmYPZBYWAgEPDxYEHghJbWFnZVVybAUofi9Eb2N1bWVudHMvLzIvMTc2NjM0MTY1MjQyODQ1ODc0NTUwLkpQRx4HVmlzaWJsZWdkZAIFDw8WAh4EVGV4dAUa2KzYp9mF2LnYqSDYqNmG2Yog2LPZiNmK2YFkZAINDw8WAh8BaGRkAg8PDxYCHwFoZGQCEQ8PFgIfAWhkZAITDw8WAh8BaGRkAhUPDxYCHwFoZGQCFw8PFgIfAWhkZAIZDw8WAh8BaGRkAhsPDxYCHwFoZGQCIQ9kFgICAQ8PFgIfAWhkZAIHDxYCHwFoZAIJD2QWAgIBD2QWAmYPZBYEAgUPD2QWAhევ0xI4SQ7vdLqlJQhXWMaiv4MOGzbJjlUj8rLA1m0&t=fffffffffa2fd9a5" />
+        <input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="3639424D" />
+        <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="wEWBwKwlYboCwL74ceMBgKXr42PBwKvxqvoDgKiz4vHBALCu9PyDwKNstf4Awu/6Ui2JWBXIbsn9yxy2qn8+7Lt" />
+
+        <!-- Header -->
+        <div class="header">
+            <img src="../Documents/2/176634165242845874550.JPG" alt="شعار الجامعة">
+            <h1>خدمات التسجيل الإلكتروني</h1>
+            <h2>جامعة بني سويف</h2>
+        </div>
+
+        <!-- Login Form -->
+        <div class="login-container">
+            <h3 class="text-center mb-4">بيانات الدخول</h3>
+            <div class="mb-3">
+                <label for="ctl00_cntphmaster_txt_StudCode" class="form-label">اسم المستخدم</label>
+                <input type="text" class="form-control" id="ctl00_cntphmaster_txt_StudCode" name="ctl00$cntphmaster$txt_StudCode" placeholder="الرقم القومي - كود الطالب" required>
+            </div>
+            <div class="mb-3">
+                <label for="ctl00_cntphmaster_txt_Nationalnum" class="form-label">كلمة السر</label>
+                <input type="password" class="form-control" id="ctl00_cntphmaster_txt_Nationalnum" name="ctl00$cntphmaster$txt_Nationalnum" placeholder="الرقم القومي - الرقم التعريفي" required>
+            </div>
+            <button type="submit" name="ctl00$cntphmaster$btn_Login" class="btn btn-primary">تسجيل الدخول</button>
+            <a href="javascript:__doPostBack('ctl00$cntphmaster$lbeditpassword','')" class="forgot-password">نسيت كلمة المرور؟</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                <u>مشروع تطوير نظم وتكنولوجيا المعلومات في التعليم العالي ICTP - © 2014 جميع الحقوق محفوظة</u><br>
+                <a href="http://www.informatique-eg.com">التصميم والتنفيذ من خلال شركة انفورماتيك لتكنولوجيا المعلومات</a>
+            </p>
+        </div>
+    </form>
+
+    <!-- Bootstrap JS and Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Clear input fields on focus
+        document.getElementById('ctl00_cntphmaster_txt_StudCode').addEventListener('focus', function() {
+            this.value = '';
+        });
+        document.getElementById('ctl00_cntphmaster_txt_Nationalnum').addEventListener('focus', function() {
+            this.value = '';
+        });
+
+        // Language switching functions
+        function LangEn() {
+            document.getElementById('ctl00_cmblanuages').value = 'English';
+        }
+        function LangAr() {
+            document.getElementById('ctl00_cmblanuages').value = 'Arabic';
+        }
+        function openInNewTab(url) {
+            window.open(url, '_blank').focus();
+        }
+
+        // Prevent going back
+        history.forward();
+    </script>
+</body>
+</html>
