@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 
     <!-- الأنماط المخصصة -->
     <style>
@@ -48,15 +49,20 @@
             direction: rtl;
             background-color: var(--neutral-light-gray);
             margin: 0;
+            overflow-x: hidden;
         }
 
         /* التنقل */
         .navbar-white {
-            background-color: var(--primary-green);
+            background: linear-gradient(to bottom, rgba(40,167,69,0.9), rgba(40,167,69,0.7));
             border: none;
-            border-radius: 0 0 12px 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: background 0.3s ease;
         }
         .navbar-brand img {
             max-height: 40px;
@@ -71,12 +77,13 @@
             color: var(--neutral-white) !important;
             font-size: 1.1rem;
             padding: 10px 15px;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
         .navbar-nav > li > a:hover {
             background-color: var(--secondary-blue);
             color: var(--neutral-white) !important;
+            transform: scale(1.05);
         }
         .langbtn {
             background-color: var(--primary-red);
@@ -99,68 +106,84 @@
 
         /* الهيرو */
         .hero-image {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('hero-bg.jpg');
             background-size: cover;
             background-position: center;
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
         }
         .hero-text h1 {
             color: var(--neutral-white);
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            animation: fadeInUp 1s ease;
         }
         .hero-text h2 {
             color: var(--primary-red);
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 600;
             margin-bottom: 30px;
         }
         .hero-text .btn a {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            padding: 12px 24px;
-            border-radius: 25px;
+            padding: 14px 28px;
+            border-radius: 30px;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
+            animation: pulse 2s infinite;
         }
         .hero-text .btn a:hover {
             background-color: var(--secondary-blue);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
         }
         .hero-text .btn img {
-            max-width: 20px;
+            max-width: 22px;
         }
 
         /* نموذج الحجز */
         .book-form {
             background-color: var(--neutral-white);
             border: 2px solid var(--primary-green);
-            padding: 25px;
-            border-radius: 12px;
-            margin: 30px auto;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px auto;
             max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .book-form:hover {
+            transform: translateY(-5px);
         }
         .book-form .input-field {
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 1rem;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 1.1rem;
             width: 100%;
+            border: 1px solid var(--primary-green);
+            transition: border-color 0.3s ease;
+        }
+        .book-form .input-field:focus {
+            border-color: var(--secondary-blue);
+            outline: none;
         }
         .book-form .btn {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
         }
         .book-form .btn:hover {
@@ -169,104 +192,111 @@
         }
         .offline_booking {
             color: var(--neutral-dark-gray);
-            font-size: 1.2rem;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         /* الخدمات */
         #services {
-            padding: 60px 0;
+            padding: 80px 0;
+            background: linear-gradient(to bottom, var(--neutral-light-gray), var(--neutral-white));
         }
         #services h2 {
             color: var(--primary-green);
             text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 40px;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
         }
         .service-box {
             background: var(--neutral-white);
-            padding: 25px;
-            margin: 15px 0;
-            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .service-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .service-box i {
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
         }
         .service-box h3 {
             color: var(--primary-red);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 15px;
         }
         .service-box p {
             color: var(--neutral-dark-gray);
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         .service-box a {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
         }
         .service-box a:hover {
             background-color: var(--secondary-blue);
             transform: translateY(-2px);
         }
-        .service-box i {
-            color: var(--primary-red);
-            margin-bottom: 15px;
-        }
 
         /* التستيمونيال */
         #testimonials {
-            padding: 60px 0;
+            padding: 80px 0;
             background-color: var(--neutral-white);
         }
         #testimonials h2 {
             color: var(--primary-green);
             text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 40px;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
         }
         .testimonial-box {
             background: var(--neutral-light-gray);
-            padding: 25px;
-            margin: 15px;
-            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 10px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .testimonial-box:hover {
+            transform: translateY(-5px);
         }
         .testimonial-box p {
             color: var(--neutral-dark-gray);
-            font-size: 1rem;
+            font-size: 1.1rem;
             margin-bottom: 15px;
         }
         .testimonial-box h4 {
             color: var(--primary-red);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         /* الفوتر */
         footer {
-            background-color: var(--primary-green);
+            background: linear-gradient(to top, var(--primary-green), #219653);
             color: var(--neutral-white);
-            padding: 40px 0;
+            padding: 50px 0;
         }
         footer h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 20px;
         }
         footer a {
             color: var(--neutral-white);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: color 0.3s ease;
         }
         footer a:hover {
@@ -277,7 +307,16 @@
             padding: 0;
         }
         footer ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        .social-icons a {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: var(--neutral-white);
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: var(--secondary-blue);
         }
 
         /* التحميل */
@@ -298,21 +337,48 @@
             background: var(--primary-red);
         }
 
+        /* تأثيرات التحرك */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 5px 12px rgba(0,0,0,0.4);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            }
+        }
+
         /* تصميم متجاوب */
         @media (max-width: 768px) {
+            .hero-image {
+                padding: 60px 0;
+                min-height: 500px;
+            }
             .hero-text h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
             .hero-text h2 {
-                font-size: 1.4rem;
-            }
-            .hero-image {
-                padding: 50px 0;
+                font-size: 1.6rem;
             }
             .navbar-nav {
-                flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
+                padding: 10px 0;
             }
             .navbar-nav > li > a {
                 font-size: 0.9rem;
@@ -323,22 +389,22 @@
                 padding: 6px 12px;
             }
             .book-form {
-                padding: 15px;
+                padding: 20px;
                 margin: 20px 10px;
             }
             .service-box, .testimonial-box {
                 margin: 10px;
             }
             #services h2, #testimonials h2 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
         }
         @media (max-width: 576px) {
             .hero-text h1 {
-                font-size: 1.6rem;
+                font-size: 2rem;
             }
             .hero-text h2 {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .navbar-brand img {
                 max-height: 30px;
@@ -353,6 +419,14 @@
             }
             .langbtn img {
                 max-width: 16px;
+            }
+            .book-form .input-field {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            .book-form .btn {
+                font-size: 0.9rem;
+                padding: 10px 18px;
             }
         }
     </style>
@@ -401,10 +475,28 @@
                     <img src="ontime.png" alt="شعار طبيب في الحال" class="img-responsive">
                 </a>
             </div>
- 
-       
+            <ul class="nav navbar-nav">
+                <li><a href="" target="_blank">طبيب في الحال بلوج</a></li>
+                <li><a href="ar/SymptomsChecker">ابحث بالأعراض</a></li>
+                <li><a href="ar/homevisit">احجز زيارة منزلية</a></li>
+                <li><a href="ar/Labs">احصل على الخصم الآن</a></li>
+                <li><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
+                <li>
+                    <button class="btn langbtn en" onclick="window.location='/en'">
+                        <img src="am.png" alt="English"> English
+                    </button>
+                </li>
+                <li>
+                    <button class="btn langbtn ar" onclick="window.location='/ar'">
+                        <img src="eg.png" alt="العربية"> العربية
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <!-- الهيرو -->
-    <header class="hero-image">
+    <header class="hero-image" data-aos="fade-up">
         <div class="container-fluid">
             <div class="hero-text">
                 <div class="row">
@@ -422,7 +514,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col-xs-12 mb-10">
+                    <div class="col-xs-12 mb-10" data-aos="fade-up" data-aos-delay="200">
                         <p class="offline_booking">احجز مع الدكتور في العيادة</p>
                         <div id="box-form" class="form_card">
                             <div class="book-form">
@@ -458,29 +550,29 @@
     </header>
 
     <!-- الخدمات -->
-    <section id="services" style="padding: 60px 0;">
+    <section id="services" style="padding: 80px 0;">
         <div class="container">
-            <h2>خدماتنا الطبية</h2>
+            <h2 data-aos="fade-up">خدماتنا الطبية</h2>
             <div class="row">
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12" data-aos="fade-up" data-aos-delay="100">
                     <div class="service-box">
-                        <i class="fa fa-calendar-check-o fa-2x"></i>
+                        <i class="fa fa-calendar-check-o fa-3x"></i>
                         <h3>حجز مواعيد أونلاين</h3>
                         <p>احجز موعدك مع أفضل الأطباء بسهولة وسرعة.</p>
                         <a href="ar/search" class="btn">احجز الآن</a>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                     <div class="service-box">
-                        <i class="fa fa-home fa-2x"></i>
+                        <i class="fa fa-home fa-3x"></i>
                         <h3>زيارات منزلية</h3>
                         <p>احصل على زيارة طبيب في منزلك بكل راحة.</p>
                         <a href="ar/homevisit" class="btn">احجز زيارة</a>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12" data-aos="fade-up" data-aos-delay="300">
                     <div class="service-box">
-                        <i class="fa fa-flask fa-2x"></i>
+                        <i class="fa fa-flask fa-3x"></i>
                         <h3>تحاليل طبية</h3>
                         <p>إجراء التحاليل الطبية من منزلك بسهولة.</p>
                         <a href="ar/Labs" class="btn">احجز تحليل</a>
@@ -491,10 +583,10 @@
     </section>
 
     <!-- التستيمونيال -->
-    <section id="testimonials" style="padding: 60px 0;">
+    <section id="testimonials" style="padding: 80px 0;">
         <div class="container">
-            <h2>آراء العملاء</h2>
-            <div class="owl-carousel owl-theme" id="testimonials-carousel">
+            <h2 data-aos="fade-up">آراء العملاء</h2>
+            <div class="owl-carousel owl-theme" id="testimonials-carousel" data-aos="fade-up" data-aos-delay="200">
                 <div class="item">
                     <div class="testimonial-box">
                         <p>"خدمة رائعة! تمكنت من حجز موعد مع طبيب بسهولة وسرعة."</p>
@@ -518,10 +610,23 @@
                 <div class="col-md-4 col-sm-12">
                     <h3>طبيب في الحال</h3>
                     <p>دليل شامل لأفضل الخدمات الطبية في متناول يديك!</p>
+                    <div class="social-icons">
+                        <a href="#" aria-label="فيسبوك"><i class="fa fa-facebook"></i></a>
+                        <a href="#" aria-label="تويتر"><i class="fa fa-twitter"></i></a>
+                        <a href="#" aria-label="إنستغرام"><i class="fa fa-instagram"></i></a>
+                    </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
-                                 <h3>اتصل بنا</h3>
-                    <p><a href="tel:00201007586279">هاتفنا</a></p>
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="ar">الرئيسية</a></li>
+                        <li><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
+                        <li><a href="ar/SymptomsChecker">ابحث بالأعراض</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h3>اتصل بنا</h3>
+                    <p><a href="tel:00201007586279">00201007586279</a></p>
                     <p><a href="https://wa.me/+201007586279">واتساب</a></p>
                 </div>
             </div>
@@ -534,7 +639,14 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script defer src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+        // تهيئة AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
         // إغلاق النافذة المنبثقة
         $('.close_ph_popup').on('click', function(e) {
             e.preventDefault();
