@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- الأنماط المخصصة -->
     <style>
@@ -46,154 +47,252 @@
             font-family: 'Cairo', sans-serif;
             direction: rtl;
             background-color: var(--neutral-light-gray);
+            margin: 0;
         }
 
         /* التنقل */
         .navbar-white {
             background-color: var(--primary-green);
-            border-color: var(--primary-red);
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: none;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        .navbar-brand img {
+            max-height: 40px;
+        }
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            width: 100%;
         }
         .navbar-nav > li > a {
             color: var(--neutral-white) !important;
-            transition: color 0.3s ease;
+            font-size: 1.1rem;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
         .navbar-nav > li > a:hover {
-            color: var(--secondary-blue) !important;
-        }
-        .navbar-toggle .side-menu-icon {
-            filter: brightness(0) invert(1);
+            background-color: var(--secondary-blue);
+            color: var(--neutral-white) !important;
         }
         .langbtn {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            margin: 5px;
-            transition: background-color 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 0 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
         .langbtn:hover {
             background-color: var(--secondary-blue);
+            transform: scale(1.05);
+        }
+        .langbtn img {
+            max-width: 18px;
+            vertical-align: middle;
+            margin-left: 5px;
         }
 
         /* الهيرو */
         .hero-image {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('hero-bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('hero-bg.jpg');
             background-size: cover;
-            padding: 50px 0;
+            background-position: center;
+            padding: 80px 0;
             text-align: center;
         }
         .hero-text h1 {
-            color: var(--primary-green);
-            font-size: 2.5rem;
+            color: var(--neutral-white);
+            font-size: 3rem;
+            font-weight: 700;
             margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         .hero-text h2 {
             color: var(--primary-red);
             font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 30px;
         }
         .hero-text .btn a {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 25px;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
         .hero-text .btn a:hover {
             background-color: var(--secondary-blue);
+            transform: translateY(-2px);
+        }
+        .hero-text .btn img {
+            max-width: 20px;
         }
 
         /* نموذج الحجز */
         .book-form {
             background-color: var(--neutral-white);
             border: 2px solid var(--primary-green);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 800px;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px auto;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .book-form .input-field {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1rem;
+            width: 100%;
         }
         .book-form .btn {
             background-color: var(--primary-red);
             color: var(--neutral-white);
-            transition: background-color 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
         .book-form .btn:hover {
             background-color: var(--secondary-blue);
+            transform: translateY(-2px);
+        }
+        .offline_booking {
+            color: var(--neutral-dark-gray);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
         /* الخدمات */
+        #services {
+            padding: 60px 0;
+        }
+        #services h2 {
+            color: var(--primary-green);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
         .service-box {
             background: var(--neutral-white);
-            padding: 20px;
-            margin: 10px;
-            border: 1px solid var(--primary-green);
-            border-radius: 8px;
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 12px;
             text-align: center;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .service-box:hover {
             transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         .service-box h3 {
             color: var(--primary-red);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .service-box p {
+            color: var(--neutral-dark-gray);
+            font-size: 1rem;
         }
         .service-box a {
             background-color: var(--primary-red);
             color: var(--neutral-white);
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
         }
         .service-box a:hover {
             background-color: var(--secondary-blue);
+            transform: translateY(-2px);
+        }
+        .service-box i {
+            color: var(--primary-red);
+            margin-bottom: 15px;
         }
 
         /* التستيمونيال */
         #testimonials {
-            padding: 50px 0;
+            padding: 60px 0;
             background-color: var(--neutral-white);
         }
         #testimonials h2 {
             color: var(--primary-green);
             text-align: center;
-            margin-bottom: 30px;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
         }
         .testimonial-box {
             background: var(--neutral-light-gray);
-            padding: 20px;
-            margin: 10px;
-            border: 1px solid var(--secondary-blue);
-            border-radius: 8px;
+            padding: 25px;
+            margin: 15px;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .testimonial-box p {
+            color: var(--neutral-dark-gray);
+            font-size: 1rem;
+            margin-bottom: 15px;
         }
         .testimonial-box h4 {
             color: var(--primary-red);
+            font-size: 1.2rem;
         }
 
         /* الفوتر */
         footer {
             background-color: var(--primary-green);
             color: var(--neutral-white);
-            padding: 30px 0;
+            padding: 40px 0;
+        }
+        footer h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
         }
         footer a {
             color: var(--neutral-white);
             text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
         footer a:hover {
             color: var(--secondary-blue);
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            margin-bottom: 10px;
         }
 
         /* التحميل */
         #preloader {
             background-color: var(--primary-green);
-            opacity: 0.7;
+            opacity: 0.8;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .lds-roller div {
             background: var(--primary-red);
@@ -202,16 +301,58 @@
         /* تصميم متجاوب */
         @media (max-width: 768px) {
             .hero-text h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             .hero-text h2 {
                 font-size: 1.4rem;
             }
+            .hero-image {
+                padding: 50px 0;
+            }
             .navbar-nav {
-                background-color: var(--primary-green);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .navbar-nav > li > a {
+                font-size: 0.9rem;
+                padding: 8px 10px;
+            }
+            .langbtn {
+                margin: 5px;
+                padding: 6px 12px;
             }
             .book-form {
                 padding: 15px;
+                margin: 20px 10px;
+            }
+            .service-box, .testimonial-box {
+                margin: 10px;
+            }
+            #services h2, #testimonials h2 {
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .hero-text h1 {
+                font-size: 1.6rem;
+            }
+            .hero-text h2 {
+                font-size: 1.2rem;
+            }
+            .navbar-brand img {
+                max-height: 30px;
+            }
+            .navbar-nav > li > a {
+                font-size: 0.8rem;
+                padding: 6px 8px;
+            }
+            .langbtn {
+                font-size: 0.8rem;
+                padding: 5px 10px;
+            }
+            .langbtn img {
+                max-width: 16px;
             }
         }
     </style>
@@ -245,7 +386,7 @@
     <!-- التحميل -->
     <div id="preloader" style="display: none;">
         <div style="position: relative; height: 100%; width: 100%;">
-            <img alt="جاري التحميل" src="loading.gif" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 10%;">
+            <img alt="جاري التحميل" src="loading.gif" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 80px;">
         </div>
         <div class="lds-roller">
             <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
@@ -253,42 +394,30 @@
     </div>
 
     <!-- التنقل -->
-    <nav class="navbar navbar-white navbar-fixed-top" id="navbar" role="navigation">
+    <nav class="navbar navbar-white" id="navbar" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false">
-                    <img src="ic-side-menu-dark.svg" alt="أيقونة القائمة" class="img-responsive side-menu-icon" id="side-menu-icon" onclick="change()">
-                </button>
                 <a class="navbar-brand" href="ar">
-                    <img src="ontime.jpeg" alt="شعار طبيب في الحال" class="img-responsive">
+                    <img src="ontime.png" alt="شعار طبيب في الحال" class="img-responsive">
                 </a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li class="active Deskmenu"><a href="" target="_blank">طبيب في الحال بلوج</a></li>
-                    <li class="active Deskmenu"><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
-                    <li class="dropdown Deskmenu">
-                        <a href="en"><img src="am.png" alt="English" class="img-responsive flg-img" width="25" height="25"></a>
-                    </li>
-                    <li class="mobilemenu">
-                        <p>تعديل اللغة</p>
-                        <div>
-                            <button class="btn btn-block langbtn en" onclick="window.location='/en'">
-                                <img src="am.png" alt="English" class="img-responsive english-img"> English
-                            </button>
-                            <button class="btn btn-block langbtn ar" onclick="window.location='/ar'">
-                                <img src="eg.png" alt="العربية" class="img-responsive arabic-img"> العربية
-                            </button>
-                        </div>
-                    </li>
-                    <li class="active mobilemenu"><hr></li>
-                    <li class="active mobilemenu"><a href="" target="_blank">طبيب في الحال بلوج</a></li>
-                    <li class="active mobilemenu"><a href="ar/SymptomsChecker">ابحث بالأعراض</a></li>
-                    <li class="active mobilemenu"><a href="ar/homevisit">احجز زيارة منزلية</a></li>
-                    <li class="active mobilemenu"><a href="ar/Labs">احجز تحليل من البيت</a></li>
-                    <li class="active mobilemenu"><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
-                </ul>
-            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="" target="_blank">طبيب في الحال بلوج</a></li>
+                <li><a href="ar/SymptomsChecker">ابحث بالأعراض</a></li>
+                <li><a href="ar/homevisit">احجز زيارة منزلية</a></li>
+                <li><a href="ar/Labs">احصل على الخصم الآن</a></li>
+                <li><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
+                <li>
+                    <button class="btn langbtn en" onclick="window.location='/en'">
+                        <img src="am.png" alt="English"> English
+                    </button>
+                </li>
+                <li>
+                    <button class="btn langbtn ar" onclick="window.location='/ar'">
+                        <img src="eg.png" alt="العربية"> العربية
+                    </button>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -306,7 +435,7 @@
                             <button type="button" id="Home_call" class="btn">
                                 <a href="tel:00201007586279">
                                     <img alt="اتصل بنا" src="btn-call.svg">
-                                    <p>اتصل بنا</p>
+                                    <span>اتصل بنا</span>
                                 </a>
                             </button>
                         </div>
@@ -317,7 +446,7 @@
                             <div class="book-form">
                                 <form class="global-nav" onsubmit="changeurl();return false;" accept-charset="UTF-8" id="drsearch">
                                     <div class="row">
-                                        <div class="col-md-2 col-sm-12 col-xs-12 book_form_input">
+                                        <div class="col-md-3 col-sm-12 col-xs-12 book_form_input">
                                             <div class="input-container selectdiv">
                                                 <select class="input-field input-lg firstSelect" id="my_select" name="drcategory" aria-label="اختيار التخصص">
                                                     <option value="0">اختر التخصص</option>
@@ -347,12 +476,13 @@
     </header>
 
     <!-- الخدمات -->
-    <section id="services" style="padding: 50px 0;">
+    <section id="services" style="padding: 60px 0;">
         <div class="container">
             <h2>خدماتنا الطبية</h2>
             <div class="row">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="service-box">
+                        <i class="fa fa-calendar-check-o fa-2x"></i>
                         <h3>حجز مواعيد أونلاين</h3>
                         <p>احجز موعدك مع أفضل الأطباء بسهولة وسرعة.</p>
                         <a href="ar/search" class="btn">احجز الآن</a>
@@ -360,6 +490,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="service-box">
+                        <i class="fa fa-home fa-2x"></i>
                         <h3>زيارات منزلية</h3>
                         <p>احصل على زيارة طبيب في منزلك بكل راحة.</p>
                         <a href="ar/homevisit" class="btn">احجز زيارة</a>
@@ -367,6 +498,7 @@
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="service-box">
+                        <i class="fa fa-flask fa-2x"></i>
                         <h3>تحاليل طبية</h3>
                         <p>إجراء التحاليل الطبية من منزلك بسهولة.</p>
                         <a href="ar/Labs" class="btn">احجز تحليل</a>
@@ -377,7 +509,7 @@
     </section>
 
     <!-- التستيمونيال -->
-    <section id="testimonials" style="padding: 50px 0;">
+    <section id="testimonials" style="padding: 60px 0;">
         <div class="container">
             <h2>آراء العملاء</h2>
             <div class="owl-carousel owl-theme" id="testimonials-carousel">
@@ -407,7 +539,7 @@
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <h3>روابط سريعة</h3>
-                    <ul style="list-style: none; padding: 0;">
+                    <ul>
                         <li><a href="ar">الرئيسية</a></li>
                         <li><a href="ar/areyoudoctors">دكتور؟ سجل معانا</a></li>
                         <li><a href="ar/SymptomsChecker">ابحث بالأعراض</a></li>
@@ -429,19 +561,6 @@
     <script defer src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script>
-        // تغيير أيقونة القائمة
-        function change() {
-            var img = document.getElementById("side-menu-icon");
-            var navbar = document.getElementById("navbar");
-            if (img.src.includes("ic-side-menu-dark.svg")) {
-                img.src = "ic-close.svg";
-                navbar.style.borderRadius = "0px 0px 10px 10px";
-            } else {
-                img.src = "ic-side-menu-dark.svg";
-                navbar.style.borderRadius = "0px";
-            }
-        }
-
         // إغلاق النافذة المنبثقة
         $('.close_ph_popup').on('click', function(e) {
             e.preventDefault();
@@ -457,11 +576,12 @@
                 autoplayTimeout: 5000,
                 autoplayHoverPause: true,
                 nav: true,
-                dots: true
+                dots: true,
+                navText: ['<i class="fa fa-chevron-right"></i>', '<i class="fa fa-chevron-left"></i>']
             });
         });
 
-        // دالة البحث (يجب تحديثها حسب الbackend)
+        // دالة البحث
         function changeurl() {
             var category = document.getElementById("my_select").value;
             window.location.href = "ar/search/" + category;
